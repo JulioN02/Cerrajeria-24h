@@ -1,0 +1,667 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * CARDS.CSS - SISTEMA DE TARJETAS REUTILIZABLES
+ * 
+ * Responsabilidad: Definir estilos para cards
+ * Variantes: genérica, servicio, testimonial
+ * Estados: default, hover, active
+ * 
+ * Orden de carga: DUODÉCIMO (después de buttons.css)
+ * 
+ * Uso en HTML:
+ * <div class="card">...</div>
+ * <div class="card service-card">...</div>
+ * <div class="card testimonial-card">...</div>
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 1. CARD BASE - ESTILOS COMUNES A TODOS                          */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .card
+ * 
+ * Card genérica base
+ * Blanco, con sombra, bordes redondeados
+ * Heredan de aquí cards especializadas
+ * 
+ * En tu HTML:
+ * <div class="card">
+ *   <h3>Título</h3>
+ *   <p>Descripción</p>
+ * </div>
+ */
+.card {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  
+  /* Dimensiones */
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-card);
+  
+  /* Fondo y borde */
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  
+  /* Sombra */
+  box-shadow: var(--shadow-sm);
+  
+  /* Transición */
+  transition: var(--transition-all);
+  
+  /* Overflow */
+  overflow: hidden;
+}
+
+/**
+ * .card:hover
+ * 
+ * Hover: elevación + sombra más fuerte
+ */
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  border-color: var(--color-gray-300);
+}
+
+/**
+ * .card:focus-within
+ * 
+ * Cuando un elemento interior tiene focus
+ */
+.card:focus-within {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary);
+}
+
+/**
+ * .card.is-active
+ * 
+ * Card en estado activo (seleccionada)
+ */
+.card.is-active {
+  border-color: var(--color-primary);
+  background-color: var(--color-gray-50);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 2. CARD DE SERVICIO                                             */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .service-card
+ * 
+ * Card para servicios con layout horizontal compacto
+ */
+.service-card {
+  display: flex;
+  flex-direction: row; /* Layout horizontal */
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  gap: var(--spacing-md);
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-gray-200);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  overflow: hidden;
+  height: 100%;
+  position: relative;
+  max-width: 400px; /* Limitar ancho máximo */
+}
+
+/**
+ * .service-card__image-wrapper
+ * 
+ * Miniatura lateral equilibrada
+ */
+.service-card__image-wrapper {
+  flex-shrink: 0;
+  width: 96px; /* 50% más que 64px */
+  height: 96px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--color-gray-100);
+  border: 1px solid var(--color-gray-200);
+}
+
+.service-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-base);
+}
+
+.service-card:hover .service-card__image {
+  transform: scale(1.1);
+}
+
+/* Eliminar overlay invasivo */
+.service-card__image-wrapper::after {
+  display: none;
+}
+
+/**
+ * .service-card__content
+ * 
+ * Contenedor de texto alineado a la derecha de la imagen
+ */
+.service-card__content {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+}
+
+.service-card__title {
+  font-size: 1.0625rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-gray-900);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.service-card__description {
+  font-size: 0.875rem;
+  color: var(--color-gray-600);
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-clamp: 2;
+}
+
+/**
+ * .service-card__footer
+ * 
+ * Parte inferior de la card
+ */
+.service-card__footer {
+  margin-top: auto;
+  padding-top: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/**
+ * Variantes por categoría (Borde decorativo sutil)
+ */
+.service-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: transparent;
+  z-index: 10;
+}
+
+.service-card--emergency::before { background-color: var(--color-primary); }
+.service-card--residential::before { background-color: var(--color-accent); }
+.service-card--automotriz::before { background-color: var(--color-info); }
+.service-card--comercial::before { background-color: var(--color-gray-600); }
+
+/**
+ * Hover effects globales
+ */
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary-light);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 3. CARD DE TESTIMONIAL                                          */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .testimonial-card
+ * 
+ * Card para testimonios de clientes
+ * Incluye: quote, rating, autor, avatar
+ * 
+ * En tu HTML:
+ * <div class="card testimonial-card">
+ *   <p class="testimonial-card__quote">"Excelente servicio..."</p>
+ *   <div class="testimonial-card__author">
+ *     <img src="..." class="testimonial-card__avatar" alt="...">
+ *     <div>
+ *       <p class="testimonial-card__name">Juan Pérez</p>
+ *       <p class="testimonial-card__rating">★★★★★</p>
+ *     </div>
+ *   </div>
+ * </div>
+ */
+.testimonial-card {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  
+  /* Padding */
+  padding: var(--spacing-lg);
+  
+  /* No borde izquierdo como servicios */
+  border-left: none;
+}
+
+/**
+ * .testimonial-card__quote
+ * 
+ * La cita/testimonio
+ */
+.testimonial-card__quote {
+  font-size: var(--font-size-body);
+  font-style: italic;
+  color: var(--color-gray-700);
+  line-height: 1.8;
+  margin: 0;
+  padding-left: var(--spacing-md);
+  border-left: 3px solid var(--color-accent);
+}
+
+/**
+ * .testimonial-card__author
+ * 
+ * Contenedor del autor
+ */
+.testimonial-card__author {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+/**
+ * .testimonial-card__avatar
+ * 
+ * Foto del cliente
+ */
+.testimonial-card__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  object-position: center;
+  border: 2px solid var(--color-gray-200);
+}
+
+/**
+ * .testimonial-card__name
+ * 
+ * Nombre del cliente
+ */
+.testimonial-card__name {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-gray-900);
+  margin: 0;
+}
+
+/**
+ * .testimonial-card__role
+ * 
+ * Rol o empresa (opcional)
+ */
+.testimonial-card__role {
+  font-size: var(--font-size-small);
+  color: var(--color-gray-600);
+  margin: 0;
+}
+
+/**
+ * .testimonial-card__rating
+ * 
+ * Estrellas/rating
+ */
+.testimonial-card__rating {
+  font-size: var(--font-size-body);
+  color: var(--color-accent);
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+/**
+ * .testimonial-card:hover
+ * 
+ * Hover más suave que servicios
+ */
+.testimonial-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 4. CARD DE ZONA/COBERTURA                                       */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .coverage-card
+ * 
+ * Card para zonas de cobertura
+ * Incluye: zona, tiempo de respuesta, badge
+ */
+.coverage-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-lg);
+  gap: var(--spacing-md);
+}
+
+/**
+ * .coverage-card__zone
+ */
+.coverage-card__zone {
+  flex-grow: 1;
+}
+
+.coverage-card__zone-name {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-gray-900);
+  margin: 0;
+}
+
+.coverage-card__zone-area {
+  font-size: var(--font-size-small);
+  color: var(--color-gray-600);
+  margin: 2px 0 0 0;
+}
+
+/**
+ * .coverage-card__time
+ * 
+ * Tiempo de respuesta (badge)
+ */
+.coverage-card__time {
+  background-color: var(--color-accent);
+  color: var(--color-dark);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 5. TAMAÑOS DE CARD                                              */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .card--compact
+ * 
+ * Card más pequeña
+ */
+.card--compact {
+  padding: var(--spacing-md);
+  gap: var(--spacing-sm);
+}
+
+/**
+ * .card--expanded
+ * 
+ * Card más grande
+ */
+.card--expanded {
+  padding: var(--spacing-2xl);
+  gap: var(--spacing-lg);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 6. VARIACIONES VISUALES                                         */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .card--dark
+ * 
+ * Card con fondo oscuro
+ */
+.card--dark {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  border-color: var(--color-gray-700);
+}
+
+.card--dark:hover {
+  border-color: var(--color-primary);
+}
+
+/**
+ * .card--bordered
+ * 
+ * Card con borde más prominente
+ */
+.card--bordered {
+  border: 2px solid var(--color-gray-300);
+}
+
+.card--bordered:hover {
+  border-color: var(--color-primary);
+}
+
+/**
+ * .card--elevated
+ * 
+ * Card con sombra elevada desde el inicio
+ */
+.card--elevated {
+  box-shadow: var(--shadow-lg);
+}
+
+.card--elevated:hover {
+  box-shadow: var(--shadow-xl);
+}
+
+/**
+ * .card--flat
+ * 
+ * Card sin sombra
+ */
+.card--flat {
+  box-shadow: none;
+  border: 1px solid var(--color-gray-300);
+}
+
+/**
+ * .card--rounded
+ * 
+ * Card con bordes más redondeados
+ */
+.card--rounded {
+  border-radius: var(--radius-xl);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 7. CARD CON IMAGEN                                              */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .card--with-image
+ * 
+ * Card que tiene imagen arriba
+ */
+.card--with-image {
+  overflow: hidden;
+  padding: 0;
+}
+
+/**
+ * .card-image
+ */
+.card-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/**
+ * .card-content
+ * 
+ * Contenedor del contenido (cuando hay imagen)
+ */
+.card-content {
+  padding: var(--spacing-lg);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 8. ANIMACIONES                                                  */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Transiciones suaves en cards
+ */
+.card {
+  transition: box-shadow var(--transition-base),
+              transform var(--transition-base),
+              border-color var(--transition-base),
+              background-color var(--transition-base);
+}
+
+.service-card,
+.testimonial-card {
+  transition: all var(--transition-base);
+}
+
+/**
+ * @keyframes slideUpCard
+ * 
+ * Animación de entrada para cards
+ */
+@keyframes slideUpCard {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card.animate-in {
+  animation: slideUpCard var(--duration-base) var(--ease-out);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 9. RESPONSIVE ADJUSTMENTS                                       */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * En mobile, reduce padding
+ */
+@media (max-width: 479px) {
+  .card {
+    padding: var(--spacing-md);
+    gap: var(--spacing-sm);
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/**
+ * En tablet+, padding normal
+ */
+@media (min-width: 768px) {
+  .card {
+    padding: var(--spacing-lg);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 10. ESTADO SKELETON (LOADING)                                   */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .card.is-loading
+ * 
+ * Card en estado de carga
+ * Skeleton screens
+ */
+.card.is-loading {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* NOTAS DE IMPLEMENTACIÓN                                            */
+/* ═════════════════════════════════════════════════════════════════
+
+1. ESTRUCTURA HTML - SERVICE CARD:
+
+   <div class="card service-card service-card--emergency">
+     <div class="service-card__icon">🔓</div>
+     <h3 class="service-card__title">Apertura de Puertas</h3>
+     <p class="service-card__description">
+       Abrimos puertas de residencias, comercios y vehículos...
+     </p>
+     <span class="service-card__category">Emergencia</span>
+   </div>
+
+2. ESTRUCTURA HTML - TESTIMONIAL CARD:
+
+   <div class="card testimonial-card">
+     <p class="testimonial-card__quote">
+       "Excelente servicio, llegaron en 15 minutos"
+     </p>
+     <div class="testimonial-card__author">
+       <img src="avatar.jpg" class="testimonial-card__avatar" alt="Juan">
+       <div>
+         <p class="testimonial-card__name">Juan Pérez</p>
+         <p class="testimonial-card__rating">★★★★★</p>
+       </div>
+     </div>
+   </div>
+
+3. VARIANTES DISPONIBLES:
+
+   ✅ .service-card--emergency   (borde rojo)
+   ✅ .service-card--residential (borde amarillo)
+   ✅ .service-card--automotriz  (borde azul)
+   ✅ .service-card--comercial   (borde gris)
+
+4. COMBINACIONES:
+
+   ✅ Servicio destacado:
+   .card .service-card.is-featured
+
+   ✅ Card compacta:
+   .card.card--compact
+
+   ✅ Card oscura:
+   .card.card--dark
+
+5. ACCESIBILIDAD:
+
+   ✅ Contraste suficiente
+   ✅ Elementos interactivos con min-height: 44px
+   ✅ Focus visible en links dentro de card
+   ✅ Avatar con alt text
+
+6. PERFORMANCE:
+
+   - Usa transform: translateY (no anima layout)
+   - Transiciones CSS (no JS)
+   - box-shadow animado (GPU acceleration)
+
+═════════════════════════════════════════════════════════════════ */

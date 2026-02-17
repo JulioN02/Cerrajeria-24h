@@ -1,0 +1,640 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * FLOATINGCONTACT.CSS - BOTÓN FLOTANTE WHATSAPP
+ * 
+ * ⚠️ CRÍTICO PARA CONVERSIÓN
+ * 
+ * Responsabilidad: Botón WhatsApp siempre visible en mobile
+ * Position: fixed, bottom-right
+ * Visible SOLO en mobile (< 768px)
+ * Transiciones suaves, pulso de atención
+ * 
+ * Orden de carga: DECIMOSEXTO (después de inputs.css)
+ * 
+ * USO CRÍTICO: Este botón es la línea de conversión más importante
+ * - Visible 24/7 en mobile
+ * - No compite con otros CTAs
+ * - Fácil de clickear
+ * - Animación sutil (sin molestar)
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 1. CONTENEDOR FLOTANTE                                          */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .floating-contact
+ * 
+ * Contenedor para el botón flotante
+ * Position: fixed en esquina inferior derecha
+ * Z-index muy alto (80 - por encima de todo)
+ * 
+ * En tu HTML:
+ * <aside class="floating-contact" aria-label="Contacto rápido">
+ *   <a href="#" class="btn-floating floating-whatsapp" 
+ *      aria-label="Abrir chat de WhatsApp">
+ *     💬
+ *   </a>
+ * </aside>
+ */
+.floating-contact {
+  /* Position */
+  position: fixed;
+  bottom: var(--spacing-lg);
+  right: var(--spacing-lg);
+  
+  /* Z-index máximo (por debajo solo de modales) */
+  z-index: var(--z-index-floating-button);
+  
+  /* Layout */
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  
+  /* Sin pointer-events en el contenedor */
+  pointer-events: none;
+}
+
+/**
+ * En tablet+, se oculta
+ * (El botón de header/nav es suficiente)
+ */
+@media (min-width: 768px) {
+  .floating-contact {
+    display: none;
+  }
+}
+
+/**
+ * En mobile muy pequeño (< 375px), ajusta posición
+ */
+@media (max-width: 374px) {
+  .floating-contact {
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 2. BOTÓN FLOTANTE BASE                                          */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .btn-floating
+ * 
+ * Botón flotante base
+ * Circular (border-radius: full)
+ * Shadow prominente
+ * Tamaño: 56px (standard fab)
+ */
+.btn-floating {
+  /* Dimensiones */
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  
+  /* Display */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Tipografía */
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  text-decoration: none;
+  
+  /* Interacción */
+  cursor: pointer;
+  border: none;
+  
+  /* Transición */
+  transition: var(--transition-all);
+  
+  /* Shadow prominente */
+  box-shadow: var(--shadow-xl);
+  
+  /* Pointer events habilitado en el botón */
+  pointer-events: all;
+  
+  /* Previene selección de texto */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/**
+ * .btn-floating:hover
+ * 
+ * Hover: sombra más fuerte, elevación
+ */
+.btn-floating:hover {
+  transform: scale(1.1) translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+/**
+ * .btn-floating:active
+ * 
+ * Presionado: sin elevación
+ */
+.btn-floating:active {
+  transform: scale(0.95);
+  box-shadow: var(--shadow-lg);
+}
+
+/**
+ * .btn-floating:focus-visible
+ * 
+ * Focus para accesibilidad
+ */
+.btn-floating:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 3. BOTÓN WHATSAPP - VERDE OFICIAL                               */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .floating-whatsapp
+ * 
+ * Botón WhatsApp específico
+ * Color verde oficial de WhatsApp (#25D366)
+ * Emoji o icono de chat
+ * 
+ * En tu HTML:
+ * <a href="#" class="btn-floating floating-whatsapp" 
+ *    aria-label="Abrir chat de WhatsApp">
+ *   💬
+ * </a>
+ */
+.floating-whatsapp {
+  /* Colores */
+  background-color: var(--color-whatsapp);
+  color: var(--color-white);
+  
+  /* Border */
+  border: 3px solid var(--color-white);
+  
+  /* Sombra específica */
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.4),
+              0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+/**
+ * .floating-whatsapp:hover
+ */
+.floating-whatsapp:hover {
+  background-color: var(--color-whatsapp-hover);
+  border-color: var(--color-white);
+  box-shadow: 0 2px 12px rgba(37, 211, 102, 0.6),
+              0 6px 16px rgba(37, 211, 102, 0.4);
+}
+
+/**
+ * .floating-whatsapp.pulse
+ * 
+ * Animación de pulso sutil
+ * Atrae atención sin ser intrusivo
+ */
+.floating-whatsapp.pulse {
+  animation: floatingPulse 2s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 4. ESTADOS ESPECIALES                                           */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .btn-floating.is-loading
+ * 
+ * Botón en estado de carga
+ */
+.btn-floating.is-loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/**
+ * .btn-floating.is-hidden
+ * 
+ * Botón oculto (para esconder al scrollear, etc)
+ */
+.btn-floating.is-hidden {
+  transform: translateY(120px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 5. ANIMACIONES FLOTANTE                                         */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * @keyframes floatingPulse
+ * 
+ * Pulso sutil (no agresivo)
+ * Aumenta y disminuye la sombra
+ */
+@keyframes floatingPulse {
+  0%, 100% {
+    box-shadow: 0 2px 8px rgba(37, 211, 102, 0.4),
+                0 4px 12px rgba(37, 211, 102, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.6),
+                0 8px 20px rgba(37, 211, 102, 0.4);
+    transform: scale(1.05);
+  }
+}
+
+/**
+ * @keyframes floatingBounce
+ * 
+ * Rebote suave (más sutil que pulse)
+ */
+@keyframes floatingBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.btn-floating.bounce {
+  animation: floatingBounce 2s ease-in-out infinite;
+}
+
+/**
+ * @keyframes floatingSlideIn
+ * 
+ * Entrada desde abajo
+ */
+@keyframes floatingSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.btn-floating.slide-in {
+  animation: floatingSlideIn var(--duration-base) var(--ease-out);
+}
+
+/**
+ * @keyframes floatingSlideOut
+ * 
+ * Salida hacia abajo
+ */
+@keyframes floatingSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+}
+
+.btn-floating.slide-out {
+  animation: floatingSlideOut var(--duration-base) var(--ease-in);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 6. TOOLTIP FLOTANTE (OPCIONAL)                                  */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .floating-tooltip
+ * 
+ * Tooltip sobre el botón flotante
+ * Muestra mensaje al hover
+ */
+.floating-contact:hover .floating-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-10px);
+}
+
+.floating-tooltip {
+  /* Position */
+  position: absolute;
+  bottom: 64px;
+  right: 0;
+  
+  /* Display */
+  display: block;
+  
+  /* Dimensiones */
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-button);
+  
+  /* Tipografía */
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-white);
+  text-align: center;
+  white-space: nowrap;
+  
+  /* Colores */
+  background-color: var(--color-dark);
+  
+  /* Transición */
+  transition: var(--transition-all);
+  
+  /* Visibilidad inicial */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0);
+  
+  /* Pointer events */
+  pointer-events: none;
+  
+  /* Z-index */
+  z-index: calc(var(--z-index-floating-button) - 1);
+}
+
+/**
+ * .floating-tooltip::after
+ * 
+ * Flecha del tooltip
+ */
+.floating-tooltip::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 8px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--color-dark);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 7. RESPUESTAS Y FEEDBACK VISUAL                                 */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .btn-floating.is-success
+ * 
+ * Estado después de enviar (feedback)
+ */
+.btn-floating.is-success {
+  background-color: var(--color-success);
+}
+
+.btn-floating.is-success::after {
+  content: "✓";
+  position: absolute;
+  font-size: 2rem;
+  animation: successPop var(--duration-base);
+}
+
+@keyframes successPop {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 8. INDICADOR DE CONTADOR (MENSAJES)                             */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .floating-badge
+ * 
+ * Badge sobre el botón (contador de mensajes)
+ */
+.floating-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  
+  /* Dimensiones */
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  
+  /* Display */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Colores */
+  background-color: var(--color-error);
+  color: var(--color-white);
+  
+  /* Tipografía */
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-bold);
+  
+  /* Border */
+  border: 2px solid var(--color-white);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 9. RESPONSIVENESS EXHAUSTIVO                                    */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Mobile normal (375px - 767px)
+ */
+@media (max-width: 767px) {
+  .floating-contact {
+    display: flex;
+  }
+  
+  .btn-floating {
+    width: 56px;
+    height: 56px;
+    font-size: 1.5rem;
+  }
+}
+
+/**
+ * Mobile muy pequeño (< 375px)
+ * Botón más compacto
+ */
+@media (max-width: 374px) {
+  .btn-floating {
+    width: 48px;
+    height: 48px;
+    font-size: 1.25rem;
+  }
+  
+  .floating-contact {
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
+  }
+}
+
+/**
+ * Mobile landscape (< 500px height)
+ * Botón más pequeño para no tapar contenido
+ */
+@media (max-height: 500px) and (orientation: landscape) {
+  .btn-floating {
+    width: 48px;
+    height: 48px;
+    font-size: 1.25rem;
+  }
+  
+  .floating-contact {
+    bottom: var(--spacing-sm);
+    right: var(--spacing-sm);
+  }
+}
+
+/**
+ * Tablet+ (768px+)
+ * Se oculta
+ */
+@media (min-width: 768px) {
+  .floating-contact {
+    display: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 10. RESPETAR PREFERENCIAS DEL USUARIO                           */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Si el usuario prefiere motion reducida
+ */
+@media (prefers-reduced-motion: reduce) {
+  .btn-floating,
+  .floating-whatsapp {
+    animation: none;
+    transition: none;
+  }
+  
+  .btn-floating:hover {
+    transform: none;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* NOTAS DE IMPLEMENTACIÓN - CRÍTICO                                 */
+/* ═════════════════════════════════════════════════════════════════
+
+1. ESTE ES EL BOTÓN MÁS IMPORTANTE DEL SITIO
+
+   ✅ Visible SIEMPRE en mobile
+   ✅ No compite con otros CTAs
+   ✅ Verde oficial WhatsApp
+   ✅ Fácil de clickear (56px)
+   ✅ Transiciones suaves
+   ✅ Pulso de atención (sutil)
+
+2. ESTRUCTURA HTML ESPERADA:
+
+   <aside class="floating-contact" aria-label="Contacto rápido">
+     <a href="#" class="btn-floating floating-whatsapp" 
+        aria-label="Abrir chat de WhatsApp">
+       💬
+     </a>
+   </aside>
+
+3. CON TOOLTIP (OPCIONAL):
+
+   <aside class="floating-contact">
+     <div class="floating-tooltip">¡Hablemos!</div>
+     <a href="#" class="btn-floating floating-whatsapp">💬</a>
+   </aside>
+
+4. CON BADGE CONTADOR (OPCIONAL):
+
+   <aside class="floating-contact">
+     <a href="#" class="btn-floating floating-whatsapp">
+       💬
+       <span class="floating-badge">3</span>
+     </a>
+   </aside>
+
+5. JAVASCRIPT PARA FUNCIONALIDAD:
+
+   // Generar link WhatsApp dinámico
+   const whatsappBtn = document.querySelector('.floating-whatsapp');
+   const phone = '+573001234567';
+   const message = 'Hola, quiero información sobre servicios';
+   
+   whatsappBtn.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+6. EVENTOS JAVASCRIPT:
+
+   // Al hacer click
+   whatsappBtn.addEventListener('click', (e) => {
+     e.preventDefault();
+     window.open(whatsappBtn.href, '_blank');
+     // Track event en analytics
+   });
+
+7. ANIMACIONES DISPONIBLES:
+
+   .floating-whatsapp.pulse   → Pulso sutil
+   .floating-whatsapp.bounce  → Rebote suave
+   .btn-floating.slide-in     → Entrada desde abajo
+   .btn-floating.slide-out    → Salida hacia abajo
+   .btn-floating.is-success   → Confirmación
+
+8. ACCESIBILIDAD:
+
+   ✅ aria-label descriptivo
+   ✅ Color suficiente (verde WhatsApp)
+   ✅ Tamaño mínimo 48px (landscape), 56px (portrait)
+   ✅ Focus visible
+   ✅ No interfiere con contenido crítico
+
+9. POSICIONAMIENTO:
+
+   Desktop: OCULTO (usa link en header/footer)
+   Tablet:  OCULTO
+   Mobile:  VISIBLE (bottom-right)
+   
+   En mobile portrait: bottom 24px, right 24px
+   En mobile landscape: bottom 16px, right 16px
+   En mobile muy pequeño: bottom 16px, right 16px
+
+10. PERFORMANCE:
+
+    - Animaciones CSS (no JS)
+    - Transform y opacity (GPU acceleration)
+    - Sin layout shift
+    - Respeta prefers-reduced-motion
+
+11. CONVERSIÓN:
+
+    Este botón es la línea de conversión #1.
+    No debería:
+    ❌ Distraer del contenido
+    ❌ Ser intrusivo
+    ❌ Interferir con otros CTAs
+    ❌ Saturar con animaciones
+    
+    Debe:
+    ✅ Ser siempre visible (pero sutil)
+    ✅ Estar fácilmente accesible
+    ✅ Inspirar confianza (verde oficial)
+    ✅ Invitar a la acción sin forzar
+
+═════════════════════════════════════════════════════════════════ */

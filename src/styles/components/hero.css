@@ -1,0 +1,200 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * HERO.CSS - COMPONENTE HERO SECTION (PREMIUM)
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+.hero-section {
+  position: relative;
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  padding-top: calc(var(--spacing-3xl) + 80px); /* Compensar header fijo */
+  padding-bottom: var(--spacing-4xl);
+  overflow: hidden;
+  
+  /* Gradiente de fondo sutil */
+  background: radial-gradient(circle at 70% 30%, rgba(37, 99, 235, 0.08) 0%, transparent 60%),
+              radial-gradient(circle at 10% 80%, rgba(220, 38, 38, 0.05) 0%, transparent 50%),
+              var(--color-dark);
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-2xl);
+  align-items: center;
+  position: relative;
+  z-index: 1; /* Sobre el fondo */
+}
+
+@media (min-width: 1024px) {
+  .hero-content {
+    grid-template-columns: 1.2fr 1fr; /* Texto un poco más ancho */
+    gap: var(--spacing-4xl);
+    min-height: 600px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* TEXTOS Y COPYWRITING                                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+.hero-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  max-width: 600px;
+}
+
+@media (max-width: 1023px) {
+  .hero-info {
+    text-align: center;
+    margin: 0 auto;
+    align-items: center;
+  }
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  
+  /* Gradiente en texto (Opcional, muy moderno) */
+  background: linear-gradient(to right, #ffffff 40%, #bfdbfe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  color: var(--color-gray-300);
+  line-height: 1.6;
+  max-width: 540px;
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* GRUPO DE ACCIONES (CTA)                                         */
+/* ─────────────────────────────────────────────────────────────── */
+
+.hero-cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+@media (max-width: 479px) {
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .hero-cta-group .btn {
+    width: 100%;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* LISTA DE CONFIANZA (TRUST INDICATORS)                           */
+/* ─────────────────────────────────────────────────────────────── */
+
+.trust-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-top: var(--spacing-lg);
+  
+  font-size: 0.95rem;
+  color: var(--color-gray-400);
+  font-weight: 500;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.trust-item svg,
+.trust-item i {
+  color: var(--color-success); /* Iconos verdes de check */
+  font-size: 1.25em;
+}
+
+@media (max-width: 1023px) {
+  .trust-list {
+    justify-content: center;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* IMAGEN HERO (VISUAL)                                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+.hero-image-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Animación de entrada flotante */
+  animation: floatIn 1.2s ease-out forwards;
+}
+
+.hero-image {
+  width: 100%;
+  max-width: 500px; /* Controlar ancho */
+  height: auto;
+  border-radius: var(--radius-xl);
+  
+  /* Sombra suave y profesional */
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5),
+              0 0 0 1px rgba(255, 255, 255, 0.1);
+              
+  transition: transform 0.3s ease;
+}
+
+.hero-image:hover {
+  transform: translateY(-5px);
+}
+
+/* Fondo decorativo detrás de la imagen (blob/shape) */
+.hero-image-wrapper::before {
+  content: "";
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* ANIMACIONES                                                     */
+/* ─────────────────────────────────────────────────────────────── */
+
+@keyframes floatIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger de entrada para textos */
+.hero-title { animation: floatIn 0.8s ease-out forwards; }
+.hero-subtitle { animation: floatIn 0.8s ease-out 0.1s forwards; opacity: 0; animation-fill-mode: forwards; }
+.hero-cta-group { animation: floatIn 0.8s ease-out 0.2s forwards; opacity: 0; animation-fill-mode: forwards; }
+.trust-list { animation: floatIn 0.8s ease-out 0.3s forwards; opacity: 0; animation-fill-mode: forwards; }

@@ -1,0 +1,550 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * BADGES.CSS - SISTEMA DE BADGES Y ETIQUETAS
+ * 
+ * Responsabilidad: Definir estilos para badges pequeños
+ * Variantes: primario, acento, success, time
+ * Tamaños: sm, md (default), lg
+ * 
+ * Orden de carga: DECIMOTERCERO (después de cards.css)
+ * 
+ * Uso en HTML:
+ * <span class="badge badge--primary">Emergencia</span>
+ * <span class="badge badge--time">< 20 min</span>
+ * <span class="badge badge--success">Certificado</span>
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 1. BADGE BASE - ESTILOS COMUNES                                 */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .badge
+ * 
+ * Badge genérico base
+ * Pequeño, inline, con fondo y color
+ * 
+ * En tu HTML:
+ * <span class="badge">Etiqueta</span>
+ * <span class="badge badge--primary">Primario</span>
+ */
+.badge {
+  /* Display */
+  display: inline-block;
+  
+  /* Dimensiones */
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-full);
+  
+  /* Tipografía */
+  font-size: var(--font-size-micro);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.4;
+  text-align: center;
+  white-space: nowrap;
+  
+  /* Colores default */
+  background-color: var(--color-gray-200);
+  color: var(--color-gray-900);
+  
+  /* Border */
+  border: 1px solid transparent;
+  
+  /* Transición */
+  transition: var(--transition-color);
+  
+  /* User select */
+  user-select: none;
+}
+
+/**
+ * .badge a
+ * 
+ * Si el badge es un link
+ */
+.badge a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.badge a:hover {
+  text-decoration: underline;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 2. VARIANTE PRIMARIA - BADGE ROJO                               */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .badge--primary
+ * 
+ * Badge rojo para categorías importantes
+ * Usado para: Emergencia, Destacado, Crítico
+ */
+.badge--primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-weight: var(--font-weight-bold);
+}
+
+/**
+ * .badge--primary:hover
+ */
+.badge--primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 3. VARIANTE ACENTO - BADGE AMARILLO                             */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .badge--accent
+ * 
+ * Badge amarillo para alertas y tiempos
+ * Usado para: 24h, Rápido, Oferta
+ */
+.badge--accent {
+  background-color: var(--color-accent);
+  color: var(--color-dark);
+  font-weight: var(--font-weight-bold);
+}
+
+/**
+ * .badge--accent:hover
+ */
+.badge--accent:hover {
+  background-color: var(--color-accent-hover);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 4. VARIANTE SUCCESS - BADGE VERDE                               */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .badge--success
+ * 
+ * Badge verde para estados positivos
+ * Usado para: Certificado, Garantía, Completado
+ */
+.badge--success {
+  background-color: var(--color-success);
+  color: var(--color-white);
+}
+
+/**
+ * .badge--success:hover
+ */
+.badge--success:hover {
+  background-color: #059669;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 5. VARIANTE WARNING - BADGE ÁMBAR                               */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .badge--warning
+ * 
+ * Badge ámbar para advertencias
+ * Usado para: Limitado, Pendiente, Alerta
+ */
+.badge--warning {
+  background-color: var(--color-warning);
+  color: var(--color-dark);
+}
+
+/**
+ * .badge--warning:hover
+ */
+.badge--warning:hover {
+  background-color: var(--color-warning-hover);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 6. VARIANTE ERROR - BADGE ROJO CLARO                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .badge--error
+ * 
+ * Badge rojo para errores
+ * Usado para: No disponible, Error, Offline
+ */
+.badge--error {
+  background-color: var(--color-error);
+  color: var(--color-white);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 7. VARIANTE INFO - BADGE AZUL                                   */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .badge--info
+ * 
+ * Badge azul para información
+ */
+.badge--info {
+  background-color: var(--color-info);
+  color: var(--color-white);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 8. VARIANTE TIME (TIEMPO DE RESPUESTA)                          */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .badge--time
+ * 
+ * Badge especial para tiempos de respuesta
+ * Color: Amarillo acento, muy visible
+ * Usado en: Cobertura, Cards de servicios
+ */
+.badge--time {
+  background-color: var(--color-accent);
+  color: var(--color-dark);
+  font-weight: var(--font-weight-bold);
+  font-size: 0.75rem;
+  padding: var(--spacing-xs) var(--spacing-md);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/**
+ * .badge--time::before
+ * 
+ * Icono de reloj (opcional)
+ */
+.badge--time::before {
+  content: "⏱";
+  font-size: 0.875rem;
+}
+
+/**
+ * Si quieres sin icono, añade .badge--time.no-icon:
+ */
+.badge--time.no-icon::before {
+  content: "";
+  display: none;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 9. VARIANTE OUTLINE - BADGE CON BORDE                           */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .badge--outline
+ * 
+ * Badge solo con borde, fondo transparente
+ * Usado para: Categorías secundarias
+ */
+.badge--outline {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+/**
+ * .badge--outline:hover
+ */
+.badge--outline:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Badges específicos para categorías de servicios */
+.badge--emergencia { background-color: var(--color-primary); color: var(--color-white); font-weight: var(--font-weight-bold); }
+.badge--residencial { background-color: var(--color-accent); color: var(--color-dark); }
+.badge--automotriz { background-color: var(--color-info); color: var(--color-white); }
+.badge--comercial { background-color: var(--color-gray-600); color: var(--color-white); }
+
+/**
+ * .badge--outline-accent
+ */
+.badge--outline-accent {
+  background-color: transparent;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 10. TAMAÑOS DE BADGE                                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .badge--sm
+ * 
+ * Badge muy pequeño
+ */
+.badge--sm {
+  padding: 2px 6px;
+  font-size: 0.65rem;
+}
+
+/**
+ * .badge--md (default)
+ * 
+ * Badge mediano (default)
+ */
+
+/**
+ * .badge--lg
+ * 
+ * Badge más grande
+ */
+.badge--lg {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 0.875rem;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 11. BADGE CON ICONO                                             */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .badge--icon
+ * 
+ * Badge que contiene un icono
+ */
+.badge--icon {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+}
+
+/**
+ * .badge-icon
+ * 
+ * Elemento icono dentro de badge
+ */
+.badge-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 12. BADGE DISMISSIBLE (CERRABLE)                                */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .badge--dismissible
+ * 
+ * Badge con botón para cerrar (x)
+ */
+.badge--dismissible {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+/**
+ * .badge-close
+ * 
+ * Botón de cerrar dentro de badge
+ */
+.badge-close {
+  cursor: pointer;
+  font-size: 1rem;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0;
+  transition: var(--transition-color);
+}
+
+.badge-close:hover {
+  opacity: 0.7;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 13. BADGE CON CONTADOR                                          */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .badge--count
+ * 
+ * Badge para mostrar número (contador)
+ * Ej: notificaciones, items pendientes
+ */
+.badge--count {
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-bold);
+  min-width: 24px;
+  text-align: center;
+  border-radius: var(--radius-full);
+}
+
+/**
+ * Posición de badge sobre elemento
+ */
+.badge-position-top-right {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 14. BADGE EN GRUPO                                              */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .badge-group
+ * 
+ * Contenedor para múltiples badges
+ */
+.badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+/**
+ * .badge-group--compact
+ * 
+ * Grupo más compacto
+ */
+.badge-group--compact {
+  gap: var(--spacing-xs);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 15. ANIMACIONES                                                 */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Transiciones suaves
+ */
+.badge {
+  transition: background-color var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+/**
+ * @keyframes badgePulse
+ * 
+ * Pulso para badges destacados
+ */
+@keyframes badgePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.badge.pulse {
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+/**
+ * @keyframes badgeSlideIn
+ * 
+ * Entrada de badge
+ */
+@keyframes badgeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.badge.slide-in {
+  animation: badgeSlideIn var(--duration-fast) var(--ease-out);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 16. RESPONSIVE ADJUSTMENTS                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * En mobile, badges pueden ser más compactos
+ */
+@media (max-width: 479px) {
+  .badge {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* NOTAS DE IMPLEMENTACIÓN                                            */
+/* ═════════════════════════════════════════════════════════════════
+
+1. USO COMÚN DE BADGES:
+
+   En cards de servicios:
+   <div class="service-card">
+     <h3>Servicio</h3>
+     <span class="badge badge--primary">Emergencia</span>
+   </div>
+
+   En zonas de cobertura:
+   <div class="coverage-card">
+     <span class="badge badge--time">< 20 min</span>
+   </div>
+
+   Con icono:
+   <span class="badge badge--icon badge--success">
+     <span class="badge-icon">✓</span>
+     Certificado
+   </span>
+
+   Grupo de badges:
+   <div class="badge-group">
+     <span class="badge badge--primary">Emergencia</span>
+     <span class="badge badge--accent">24h</span>
+     <span class="badge badge--success">Garantía</span>
+   </div>
+
+2. COMBINACIONES EFECTIVAS:
+
+   ✅ Categorías:         .badge .badge--primary
+   ✅ Tiempo respuesta:  .badge .badge--time
+   ✅ Certificado:        .badge .badge--success
+   ✅ Alertas:           .badge .badge--warning
+   ✅ Información:       .badge .badge--info
+   ✅ Outline suave:     .badge .badge--outline
+
+3. COLORES SEMÁNTICOS:
+
+   Rojo (#B91C1C):    Urgencia, Emergencia, Importante
+   Amarillo (#FCD34D): Tiempo, Alerta, 24h
+   Verde (#10B981):   Éxito, Certificado, Completado
+   Azul (#3B82F6):    Información, Novedad
+   Ámbar (#F59E0B):   Advertencia, Limitado
+
+4. ACCESIBILIDAD:
+
+   ✅ Contraste suficiente
+   ✅ No depende solo de color (usa también icono/texto)
+   ✅ Font size mínimo 12px (0.75rem)
+
+5. PERFORMANCE:
+
+   - Transiciones CSS rápidas (150ms)
+   - Padding pequeño (no impacta layout)
+   - Sin sombras costosas
+
+═════════════════════════════════════════════════════════════════ */

@@ -12,4 +12,5 @@ export type Service = {
   description: string;
   category: ServiceCategory;
   isHighlighted: boolean;
+  image?: string;
 };

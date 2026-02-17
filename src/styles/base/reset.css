@@ -1,0 +1,452 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * RESET.CSS - NORMALIZACIÓN Y ESTILOS BASE GLOBALES
+ * 
+ * Responsabilidad: Limpiar estilos por defecto del navegador
+ * Garantizar consistencia cross-browser (Chrome, Firefox, Safari, Edge)
+ * 
+ * Orden de carga: PRIMERO (antes de variables.css)
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 1. RESETEO GLOBAL - Box Model y Márgenes                        */
+/* ─────────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  /* Box-sizing: border-box para que padding/border no añada ancho */
+  box-sizing: border-box;
+  
+  /* Reset de márgenes y padding */
+  margin: 0;
+  padding: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 2. HTML - Raíz del documento                                    */
+/* ─────────────────────────────────────────────────────────────── */
+
+html {
+  /* Font-size base para cálculos con rem (16px = 1rem) */
+  font-size: 16px;
+  
+  /* Scroll suave (se respeta con prefers-reduced-motion) */
+  scroll-behavior: smooth;
+  
+  /* Evita zoom en inputs en iOS */
+  -webkit-text-size-adjust: 100%;
+  
+  /* Altura mínima para footer sticky */
+  height: 100%;
+}
+
+/* Respeta preferencia de usuario para motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 3. BODY - Contenedor principal                                  */
+/* ─────────────────────────────────────────────────────────────── */
+
+body {
+  /* Altura mínima para footer sticky */
+  min-height: 100vh;
+  
+  /* Utiliza variables que vendrán de base/variables.css */
+  /* Aplicado aquí como referencia de estructura */
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-gray-700);
+  background-color: var(--color-white);
+  
+  /* Previene overflow en x en mobile */
+  overflow-x: hidden;
+  
+  /* Antialiasing para renderizado de fuentes */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 4. HEADINGS - Títulos (H1-H6)                                   */
+/* ─────────────────────────────────────────────────────────────── */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  /* Reset de márgenes */
+  margin: 0;
+  
+  /* Peso y familia (se especifican en typography.css) */
+  font-weight: inherit;
+  line-height: 1.2;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 5. PÁRRAFOS Y TEXTO                                             */
+/* ─────────────────────────────────────────────────────────────── */
+
+p {
+  margin: 0;
+}
+
+strong,
+b {
+  font-weight: 700;
+}
+
+em,
+i {
+  font-style: italic;
+}
+
+small {
+  font-size: 0.875em;
+  color: var(--color-gray-500);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 6. LISTAS                                                        */
+/* ─────────────────────────────────────────────────────────────── */
+
+ul,
+ol,
+dl {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 7. ENLACES                                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+a {
+  /* Hereda color del elemento padre */
+  color: inherit;
+  
+  /* Sin decoración por defecto */
+  text-decoration: none;
+  
+  /* Transición suave en hover */
+  transition: var(--transition-color);
+  
+  /* Previene que el navegador cree un outline confuso */
+  background-color: transparent;
+}
+
+a:focus-visible {
+  /* Outline visible en teclado */
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 8. BOTONES                                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  /* Reset de estilos por defecto */
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+  
+  /* Previene estilos de navegador */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  
+  /* Padding mínimo para accesibilidad */
+  padding: 0;
+}
+
+button:focus-visible,
+input[type="button"]:focus-visible,
+input[type="submit"]:focus-visible,
+input[type="reset"]:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+}
+
+/* Deshabilitado */
+button:disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled,
+input[type="reset"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 9. INPUTS Y FORMULARIOS                                         */
+/* ─────────────────────────────────────────────────────────────── */
+
+input,
+textarea,
+select {
+  /* Hereda tipografía */
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  
+  /* Reset de bordes */
+  border: none;
+  background: none;
+  
+  /* Reset de márgenes */
+  margin: 0;
+  
+  /* Previene estilos de navegador */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+/* Placeholder */
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-gray-400);
+  opacity: 1; /* Firefox */
+}
+
+/* Input deshabilitado */
+input:disabled,
+textarea:disabled,
+select:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 10. IMÁGENES Y MEDIA                                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+img {
+  /* Bloque para evitar línea base */
+  display: block;
+  
+  /* Responsive: no mayor que su contenedor */
+  max-width: 100%;
+  height: auto;
+  
+  /* Previene deformación */
+  object-fit: cover;
+  
+  /* Mejora de renderizado */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+picture {
+  display: block;
+}
+
+/* SVG */
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Previene que videos y embeds rompan layout */
+video,
+iframe {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 11. CÓDIGO Y PRE-FORMATEADO                                     */
+/* ─────────────────────────────────────────────────────────────── */
+
+code,
+pre {
+  font-family: var(--font-family-mono);
+  background-color: var(--color-gray-100);
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+pre {
+  overflow-x: auto;
+  padding: 12px;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 12. ELEMENTOS SEMÁNTICOS HTML5                                  */
+/* ─────────────────────────────────────────────────────────────── */
+
+/* Reset de márgenes en elementos semánticos */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 13. BLOCKQUOTE Y CITAS                                          */
+/* ─────────────────────────────────────────────────────────────── */
+
+blockquote,
+q {
+  margin: 0;
+  padding: 0;
+  quotes: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+  content: "";
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 14. HORIZONTALES                                                */
+/* ─────────────────────────────────────────────────────────────── */
+
+hr {
+  border: none;
+  border-top: 1px solid var(--color-gray-300);
+  margin: var(--spacing-md) 0;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 15. TABLA                                                       */
+/* ─────────────────────────────────────────────────────────────── */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+th,
+td {
+  text-align: left;
+  padding: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-gray-300);
+}
+
+th {
+  background-color: var(--color-gray-100);
+  font-weight: 600;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 16. TEXTAREA                                                    */
+/* ─────────────────────────────────────────────────────────────── */
+
+textarea {
+  /* Permite resize solo vertical */
+  resize: vertical;
+  
+  /* Previene cambio de fuente en iOS */
+  font-size: 16px;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 17. SELECT                                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+select {
+  cursor: pointer;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 18. MARK Y HIGHLIGHT                                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+mark {
+  background-color: #fff3cd;
+  color: inherit;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 19. CANVAS Y CONTEXTOS DE RENDERIZADO                           */
+/* ─────────────────────────────────────────────────────────────── */
+
+canvas {
+  display: block;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 20. DETALLES (DISCLOSURE WIDGET)                                */
+/* ─────────────────────────────────────────────────────────────── */
+
+details {
+  cursor: pointer;
+}
+
+summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* ═════════════════════════════════════════════════════════════════
+   NOTAS DE IMPLEMENTACIÓN
+   
+   Este archivo:
+   1. Se carga PRIMERO en main.css
+   2. No debe contener variables (vendrán de variables.css)
+   3. Prepara el canvas para los demás archivos
+   4. Es agnóstico al diseño visual (solo estructura)
+   5. Es portable a cualquier proyecto (reutilizable)
+   
+   Después de este, carga variables.css
+   ═════════════════════════════════════════════════════════════════ */

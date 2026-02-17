@@ -1,0 +1,769 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * HELPERS.CSS - CLASES AUXILIARES Y UTILIDADES GENERALES
+ * 
+ * Responsabilidad: Clases helper para casos puntuales
+ * Visibilidad (hide/show), screen readers, floats, clear
+ * Posicionamiento, overflow, display, cursor
+ * 
+ * Orden de carga: DECIMOSÉPTIMO (después de components/)
+ * 
+ * Nota: Usa con moderación. Preferencia: CSS semántico en componentes
+ * 
+ * Uso en HTML:
+ * <div class="sr-only">Contenido solo para screen readers</div>
+ * <div class="hidden">Oculto siempre</div>
+ * <div class="truncate">Texto cortado con...</div>
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 1. VISIBILIDAD Y DISPLAY                                        */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .hidden
+ * 
+ * Oculta elemento completamente (display: none)
+ * Elemento no ocupa espacio
+ * Screen readers no lo leen
+ */
+.hidden {
+  display: none !important;
+  visibility: hidden;
+}
+
+/**
+ * .invisible
+ * 
+ * Oculta visualmente pero mantiene el espacio
+ * visibility: hidden (ocupa espacio)
+ * Screen readers no lo leen
+ */
+.invisible {
+  visibility: hidden;
+}
+
+/**
+ * .sr-only
+ * 
+ * Screen reader only
+ * CRÍTICO: Visible para screen readers, invisible visualmente
+ * 
+ * Uso: Para texto que solo deben leer asistentes
+ * <span class="sr-only">Enlace actual: Servicios</span>
+ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  visibility: visible;
+}
+
+/**
+ * .sr-only-focusable
+ * 
+ * Screen reader only, pero se muestra al focus
+ * Para skip links, etc
+ */
+.sr-only:focus,
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/**
+ * .visually-hidden
+ * 
+ * Alternativa moderna de sr-only
+ */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/**
+ * .show
+ * 
+ * Fuerza display: block
+ * Útil para override rápido
+ */
+.show {
+  display: block !important;
+}
+
+/**
+ * .d-block
+ */
+.d-block {
+  display: block;
+}
+
+/**
+ * .d-inline
+ */
+.d-inline {
+  display: inline;
+}
+
+/**
+ * .d-inline-block
+ */
+.d-inline-block {
+  display: inline-block;
+}
+
+/**
+ * .d-flex
+ */
+.d-flex {
+  display: flex;
+}
+
+/**
+ * .d-grid
+ */
+.d-grid {
+  display: grid;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 2. POSICIONAMIENTO                                              */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .absolute
+ */
+.absolute {
+  position: absolute;
+}
+
+/**
+ * .relative
+ */
+.relative {
+  position: relative;
+}
+
+/**
+ * .fixed
+ */
+.fixed {
+  position: fixed;
+}
+
+/**
+ * .sticky
+ */
+.sticky {
+  position: sticky;
+}
+
+/**
+ * .static
+ */
+.static {
+  position: static;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 3. OVERFLOW Y TRUNCATE                                          */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .overflow-hidden
+ */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/**
+ * .no-scroll
+ * 
+ * Bloquea el scroll del body
+ */
+.no-scroll {
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+
+/**
+ * .overflow-auto
+ */
+.overflow-auto {
+  overflow: auto;
+}
+
+/**
+ * .overflow-scroll
+ */
+.overflow-scroll {
+  overflow: scroll;
+}
+
+/**
+ * .overflow-x-auto
+ */
+.overflow-x-auto {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/**
+ * .overflow-y-auto
+ */
+.overflow-y-auto {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/**
+ * .truncate
+ * 
+ * Trunca texto con ellipsis (...)
+ */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/**
+ * .line-clamp-2, .line-clamp-3, .line-clamp-4
+ * 
+ * Limita número de líneas
+ * Requiere line-height definida
+ */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 4. CURSOR Y POINTER EVENTS                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .cursor-pointer
+ */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/**
+ * .cursor-not-allowed
+ */
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+/**
+ * .cursor-default
+ */
+.cursor-default {
+  cursor: default;
+}
+
+/**
+ * .cursor-text
+ */
+.cursor-text {
+  cursor: text;
+}
+
+/**
+ * .pointer-events-none
+ * 
+ * Elemento no puede ser clickeado
+ */
+.pointer-events-none {
+  pointer-events: none;
+}
+
+/**
+ * .pointer-events-auto
+ */
+.pointer-events-auto {
+  pointer-events: auto;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 5. FLOAT Y CLEAR (LEGACY)                                       */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .float-left, .float-right
+ * 
+ * NOTA: Evitar usar. Preferir flexbox/grid
+ * Mantener para compatibilidad con código legacy
+ */
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+/**
+ * .float-none
+ */
+.float-none {
+  float: none;
+}
+
+/**
+ * .clearfix
+ * 
+ * Para contener floats
+ */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 6. SELECCIÓN Y USER SELECT                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .select-none
+ * 
+ * Usuario no puede seleccionar texto
+ */
+.select-none {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/**
+ * .select-all
+ * 
+ * Selecciona todo el texto
+ */
+.select-all {
+  user-select: all;
+}
+
+/**
+ * .select-auto
+ */
+.select-auto {
+  user-select: auto;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 7. ZOOM Y TRANSFORM                                             */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .scale-50, .scale-75, .scale-100, .scale-125, .scale-150
+ */
+.scale-50 {
+  transform: scale(0.5);
+}
+
+.scale-75 {
+  transform: scale(0.75);
+}
+
+.scale-100 {
+  transform: scale(1);
+}
+
+.scale-125 {
+  transform: scale(1.25);
+}
+
+.scale-150 {
+  transform: scale(1.5);
+}
+
+/**
+ * .rotate-*
+ */
+.rotate-45 {
+  transform: rotate(45deg);
+}
+
+.rotate-90 {
+  transform: rotate(90deg);
+}
+
+/**
+ * .translate-x-*, .translate-y-*
+ */
+.translate-y-2 {
+  transform: translateY(8px);
+}
+
+.translate-y-neg-2 {
+  transform: translateY(-8px);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 8. OPACITY                                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .opacity-0 hasta .opacity-100
+ */
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-25 {
+  opacity: 0.25;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.opacity-75 {
+  opacity: 0.75;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+/**
+ * .transparent
+ */
+.transparent {
+  color: transparent;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 9. DIMENSIONES                                                  */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .w-full, .h-full
+ */
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+/**
+ * .w-screen, .h-screen
+ */
+.w-screen {
+  width: 100vw;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+/**
+ * .w-auto, .h-auto
+ */
+.w-auto {
+  width: auto;
+}
+
+.h-auto {
+  height: auto;
+}
+
+/**
+ * .max-w-full
+ */
+.max-w-full {
+  max-width: 100%;
+}
+
+/**
+ * .min-h-screen
+ */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 10. BORDER Y OUTLINE                                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .border
+ */
+.border {
+  border: 1px solid var(--color-gray-300);
+}
+
+/**
+ * .border-top, .border-bottom, .border-left, .border-right
+ */
+.border-top {
+  border-top: 1px solid var(--color-gray-300);
+}
+
+.border-bottom {
+  border-bottom: 1px solid var(--color-gray-300);
+}
+
+/**
+ * .border-none
+ */
+.border-none {
+  border: none;
+}
+
+/**
+ * .outline-none
+ */
+.outline-none {
+  outline: none;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 11. Z-INDEX HELPERS                                             */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .z-auto hasta .z-50
+ */
+.z-auto {
+  z-index: auto;
+}
+
+.z-0 {
+  z-index: 0;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.z-20 {
+  z-index: 20;
+}
+
+.z-30 {
+  z-index: 30;
+}
+
+.z-40 {
+  z-index: 40;
+}
+
+.z-50 {
+  z-index: 50;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 12. ASPECT RATIO                                                */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .aspect-square
+ */
+.aspect-square {
+  aspect-ratio: 1;
+}
+
+/**
+ * .aspect-video
+ */
+.aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
+/**
+ * .aspect-4-3
+ */
+.aspect-4-3 {
+  aspect-ratio: 4 / 3;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 13. FLEXBOX HELPERS                                             */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .flex-center
+ * 
+ * Centra items horizontal y verticalmente
+ */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/**
+ * .flex-between
+ * 
+ * Distribuye items a los extremos
+ */
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/**
+ * .flex-col
+ */
+.flex-col {
+  flex-direction: column;
+}
+
+/**
+ * .flex-row
+ */
+.flex-row {
+  flex-direction: row;
+}
+
+/**
+ * .flex-wrap
+ */
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+/**
+ * .flex-grow
+ */
+.flex-grow {
+  flex-grow: 1;
+}
+
+/**
+ * .flex-shrink
+ */
+.flex-shrink {
+  flex-shrink: 1;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 14. GRID HELPERS                                                */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .grid-cols-*
+ */
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 15. CONTENT VISIBILITY (PERFORMANCE)                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .contain-layout
+ * 
+ * Optimiza performance para elementos complejos
+ */
+.contain-layout {
+  contain: layout;
+}
+
+/**
+ * .contain-paint
+ */
+.contain-paint {
+  contain: paint;
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* NOTAS DE IMPLEMENTACIÓN                                            */
+/* ═════════════════════════════════════════════════════════════════
+
+1. CUÁNDO USAR HELPERS:
+
+   ✅ Casos puntuales y excepciones
+   ✅ Override rápido en desarrollo
+   ✅ Screen reader only content
+   ✅ Utility-first para layouts sencillos
+
+   ❌ NO para estilos frecuentes (crear clase en componente)
+   ❌ NO para HTML semánticamente importante
+   ❌ NO para estilos que se repiten
+
+2. SCREEN READER ONLY (.sr-only):
+
+   <span class="sr-only">Enlace actual: Servicios</span>
+   
+   → Invisible visualmente
+   → Visible para screen readers
+   → Excelente para accesibilidad
+
+3. HIDDEN vs INVISIBLE:
+
+   .hidden     → display: none (no ocupa espacio, oculto a SR)
+   .invisible  → visibility: hidden (ocupa espacio, oculto a SR)
+   .sr-only    → Visible a SR, invisible visualmente
+
+4. PERFORMANCE:
+
+   .contain-layout  → Aísla elemento para mejor performance
+   Útil para widgets complejos
+
+5. PREFERENCIA DE USO:
+
+   Mejor:  <div class="card service-card"> (clase semántica)
+   Peor:   <div class="d-flex flex-col p-16"> (helpers)
+
+   Helpers son para casos excepcionales, no para todo.
+
+═════════════════════════════════════════════════════════════════ */

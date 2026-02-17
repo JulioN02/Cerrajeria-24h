@@ -1,0 +1,459 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * TRANSITIONS.CSS - ANIMACIONES Y TRANSICIONES CONTROLADAS
+ * 
+ * Responsabilidad: Centralizar animaciones permitidas y keyframes
+ * Evita animaciones costosas que bloquean el main thread
+ * Reutiliza variables de timing de variables.css
+ * 
+ * Orden de carga: CUARTO (después de typography.css)
+ * 
+ * ⚠️ PRINCIPIO: Anima SOLO propiedades que NO causan reflow/repaint
+ * ❌ Prohibido: width, height, left, top, margin, padding
+ * ✅ Permitido: color, opacity, transform, box-shadow, background
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 1. KEYFRAMES - ANIMACIONES REUTILIZABLES                        */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Pulse sutil - Para elemento que necesita atención (botón flotante)
+ * No es intrusivo, solo reduce opacidad ligeramente
+ */
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/**
+ * Fade in - Aparece suavemente
+ * Útil para elementos que aparecen dinámicamente
+ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/**
+ * Fade out - Desaparece suavemente
+ */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/**
+ * Slide up - Entra desde abajo
+ * Útil para modales, menús desplegables
+ */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Slide down - Sale hacia abajo
+ */
+@keyframes slideDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/**
+ * Slide right - Entra desde la izquierda
+ */
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/**
+ * Bounce subtle - Rebote suave (hover en botones)
+ * NO es un bounce agresivo, solo eleva ligeramente
+ */
+@keyframes bounceSubtle {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Scale in - Se agranda (zoom suave)
+ * Útil para elementos que entran con énfasis
+ */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/**
+ * Scale out - Se achica (zoom salida)
+ */
+@keyframes scaleOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+/**
+ * Rotate - Rotación suave
+ * Para loading spinners, etc
+ */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/**
+ * Shake - Vibración leve (error, validación)
+ * Sutil para no asustar
+ */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-2px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(2px);
+  }
+}
+
+/**
+ * Glow - Brillo pulsante (elemento destacado)
+ * Alterna entre sombra normal y más prominente
+ */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(185, 28, 28, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(185, 28, 28, 0);
+  }
+}
+
+/**
+ * Underline animation - Underline que aparece en hover
+ * Se anima el width del pseudo-elemento
+ */
+@keyframes underlineIn {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 2. CLASES DE TRANSICIÓN REUTILIZABLES                           */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .transition-all
+ * Transición suave para todas las propiedades
+ * Usar en elementos que cambiarán múltiples valores en hover
+ */
+.transition-all {
+  transition: var(--transition-all);
+}
+
+/**
+ * .transition-color
+ * Solo para cambios de color (rápido)
+ * color y background-color
+ */
+.transition-color {
+  transition: var(--transition-color);
+}
+
+/**
+ * .transition-shadow
+ * Solo para cambios de sombra
+ * box-shadow animado da efecto de elevación
+ */
+.transition-shadow {
+  transition: var(--transition-shadow);
+}
+
+/**
+ * .transition-opacity
+ * Solo para cambios de opacidad
+ * Muy rápido (150ms)
+ */
+.transition-opacity {
+  transition: var(--transition-opacity);
+}
+
+/**
+ * .transition-transform
+ * Solo para transform (escala, rotación, traslación)
+ * Se usa en elevación, zoom, etc
+ */
+.transition-transform {
+  transition: var(--transition-transform);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 3. ANIMACIONES ESPECÍFICAS PARA COMPONENTES                     */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Botones: Elevación en hover
+ * Combina transform y shadow para efecto de levitación
+ */
+.button-hover-elevate:hover {
+  animation: bounceSubtle var(--duration-base) var(--ease-in-out) forwards;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+/**
+ * Botón flotante: Pulso de atención
+ * Solo si necesita atención (clase .pulse)
+ */
+.floating-contact.pulse {
+  animation: pulse-subtle 2s var(--ease-in-out) infinite;
+}
+
+/**
+ * Cards: Elevación en hover sin animación
+ * Solo cambia sombra (no se anima)
+ */
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/**
+ * Links: Color smooth
+ * Cambio de color suave en hover
+ */
+a {
+  transition: var(--transition-color);
+}
+
+/**
+ * Inputs: Focus con glow
+ * Cambia color de borde y sombra suave
+ */
+input:focus,
+textarea:focus,
+select:focus {
+  transition: var(--transition-color), var(--transition-shadow);
+  box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.1);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 4. TRANSICIONES DE ESTADO (Alteradas por JavaScript)            */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .is-visible
+ * Elemento que aparece dinámicamente (modal, menu, etc)
+ * JavaScript agrega esta clase
+ */
+.is-visible {
+  animation: slideUp var(--duration-base) var(--ease-out);
+  opacity: 1;
+}
+
+/**
+ * .is-hidden
+ * Elemento que desaparece
+ */
+.is-hidden {
+  animation: slideDown var(--duration-base) var(--ease-in);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/**
+ * .is-active
+ * Estado activo de filtros, tabs, etc
+ */
+.is-active {
+  transition: var(--transition-all);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+
+/**
+ * .is-loading
+ * Elemento en proceso (spinner, loader)
+ */
+.is-loading {
+  animation: rotate 1s linear infinite;
+}
+
+/**
+ * .is-error
+ * Error en formulario, validación fallida
+ */
+.is-error {
+  animation: shake var(--duration-base) var(--ease-in-out);
+  border-color: var(--color-error);
+}
+
+/**
+ * .is-disabled
+ * Elemento deshabilitado
+ */
+.is-disabled {
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 5. TRANSICIONES RESPONSIVAS                                     */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Respeta preferencia de usuario para motion reducida
+ * Si usuario tiene "prefers-reduced-motion: reduce"
+ * NO anima nada
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 6. TRANSICIONES PARA DARK MODE (Futuro)                         */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Si en futuro implementamos dark mode
+ * Esta transición suaviza el cambio de tema
+ */
+@media (prefers-color-scheme: dark) {
+  html {
+    transition: background-color var(--transition-slow), color var(--transition-slow);
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* GUÍA DE USO Y BUENAS PRÁCTICAS                                     */
+/* ═════════════════════════════════════════════════════════════════
+
+1. NUNCA animes estas propiedades (causas reflow/repaint costosos):
+   ❌ width, height
+   ❌ left, top, right, bottom
+   ❌ margin, padding
+   ❌ font-size, line-height
+   
+   En su lugar:
+   ✅ transform: translateX(), scale(), rotate()
+   ✅ opacity
+   ✅ color, background-color
+   ✅ box-shadow
+
+2. Duraciones recomendadas (de variables.css):
+   150ms: Cambios de color rápidos (hover links)
+   200ms: Transforms, elevación (botones, cards)
+   300ms: Animaciones más largas (modales)
+
+3. Timing functions:
+   ease-in-out: Entrada y salida suave (la más natural)
+   ease-out: Final lento (siente "más justo")
+   ease-in: Inicio lento (siente "aceleración")
+   linear: Velocidad constante (para rotaciones)
+
+4. Performance:
+   Prueba con DevTools Performance tab
+   Busca "Long tasks" o "jank" en scrolling
+   Si hay, quita animación o usa transform/opacity
+
+5. Accesibilidad:
+   Respeta @media (prefers-reduced-motion: reduce)
+   Los usuarios con esta preferencia NO verán animaciones
+   Este archivo ya lo maneja
+
+6. Ejemplo de uso correcto:
+   
+   HTML:
+   <button class="button-hover-elevate">Llamar</button>
+   
+   CSS (ya está aquí):
+   .button-hover-elevate:hover {
+     animation: bounceSubtle ...;
+     box-shadow: var(--shadow-lg);
+   }
+   
+   ✅ Anima transform (bounceSubtle) y box-shadow
+   ✅ Usa variables de timing
+   ✅ Es suave y no bloquea
+
+7. Para JavaScript (estados dinámicos):
+   
+   TypeScript:
+   element.classList.add('is-active');
+   
+   CSS (aquí):
+   .is-active {
+     transition: var(--transition-all);
+     background-color: var(--color-primary);
+   }
+   
+   ✅ JavaScript solo alterna clases
+   ✅ CSS maneja la animación
+
+═════════════════════════════════════════════════════════════════ */

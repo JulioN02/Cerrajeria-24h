@@ -1,0 +1,556 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * SECTIONS.CSS - ESTILOS Y ESPACIADO DE SECCIONES
+ * 
+ * Responsabilidad: Definir padding/margin estándar para <section>
+ * Variantes de fondo (dark, light, colored)
+ * Estados visuales coherentes entre secciones
+ * 
+ * Orden de carga: SÉPTIMO (después de grid.css)
+ * 
+ * Uso en HTML:
+ * <section class="hero-section">...</section>
+ * <section class="services-section">...</section>
+ * <section class="section--dark">...</section>
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 1. SECCIÓN BASE - ESPACIADO ESTÁNDAR                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * section (selector general)
+ * 
+ * TODOS los <section> del documento heredan esto
+ * Padding vertical responsivo
+ * 
+ * Mobile:  48px (2 x 24px)
+ * Desktop: 64px (2 x 32px)
+ */
+section {
+  /* Padding vertical */
+  padding-top: var(--spacing-section-mobile);
+  padding-bottom: var(--spacing-section-mobile);
+  
+  /* Padding horizontal manejado por .container */
+  padding-left: 0;
+  padding-right: 0;
+  
+  /* Ancho 100% */
+  width: 100%;
+  
+  /* Auto height */
+  height: auto;
+}
+
+/* Tablet+: Padding más generoso */
+@media (min-width: 768px) {
+  section {
+    padding-top: var(--spacing-section-desktop);
+    padding-bottom: var(--spacing-section-desktop);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 2. SECCIONES CON FONDO BLANCO (Default)                         */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .section--white
+ * 
+ * Fondo blanco (default en landing pages)
+ * Mejor para: Contenido neutral, servicios, etc
+ */
+.section--white {
+  background-color: var(--color-white);
+  color: var(--color-gray-700);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 3. SECCIONES CON FONDO OSCURO                                   */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .section--dark
+ * 
+ * Fondo oscuro (negro profundo #111827)
+ * Texto blanco automático
+ * Usa para: Hero, CTA final, footer
+ * 
+ * En tu HTML:
+ * <section id="hero" class="hero-section section--dark">
+ * 
+ * El text color está en typography.css para oscuro
+ * Pero aseguramos acá el fondo
+ */
+.section--dark {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+}
+
+/**
+ * Dentro de sección dark, los links son claros
+ */
+.section--dark a {
+  color: var(--color-accent);
+}
+
+.section--dark a:hover {
+  color: var(--color-accent-hover);
+}
+
+/**
+ * Headings en sección dark
+ */
+.section--dark h1,
+.section--dark h2,
+.section--dark h3,
+.section--dark h4,
+.section--dark h5,
+.section--dark h6 {
+  color: var(--color-white);
+}
+
+/**
+ * Párrafos en sección dark
+ */
+.section--dark p {
+  color: var(--color-gray-100);
+}
+
+/**
+ * Small text en sección dark
+ */
+.section--dark small {
+  color: var(--color-gray-300);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 4. SECCIONES CON FONDO GRIS CLARO                               */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .section--light
+ * 
+ * Fondo gris claro (#F3F4F6)
+ * Diferencia visual sin ser oscuro
+ * Usa para: Cobertura, testimonios alternos
+ */
+.section--light {
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-700);
+}
+
+/**
+ * Headings en sección light (gris claro)
+ */
+.section--light h1,
+.section--light h2,
+.section--light h3,
+.section--light h4,
+.section--light h5,
+.section--light h6 {
+  color: var(--color-gray-900);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 5. SECCIONES ESPECÍFICAS DEL PROYECTO                           */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .hero-section
+ * 
+ * Sección Hero
+ * Características:
+ * - Fondo oscuro (urgencia visual)
+ * - Padding generoso para impacto
+ * - Imagen de fondo opcional
+ * - Min-height para altura visual
+ */
+.hero-section {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  
+  /* Min-height para impacto visual */
+  min-height: auto;
+  
+  /* En desktop, más altura */
+  @media (min-width: 1024px) {
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/**
+ * Si hero tiene background-image, necesita overlay
+ * En HTML: <section style="background-image: url(...)">
+ * En CSS aquí aseguramos el overlay:
+ */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--overlay-dark);
+  z-index: 0;
+}
+
+/**
+ * .services-section
+ * 
+ * Sección de servicios
+ * Fondo blanco, contenido estructurado
+ */
+.services-section {
+  background-color: var(--color-white);
+  color: var(--color-gray-700);
+}
+
+/**
+ * .coverage-section
+ * 
+ * Sección de cobertura
+ * Fondo gris claro para diferenciación
+ */
+.coverage-section {
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-700);
+}
+
+/**
+ * .testimonials-section
+ * 
+ * Sección de testimonios
+ * Fondo blanco para contraste
+ */
+.testimonials-section {
+  background-color: var(--color-white);
+  color: var(--color-gray-700);
+}
+
+/**
+ * .final-cta-section
+ * 
+ * CTA final (urgencia)
+ * Fondo oscuro nuevamente para cerrar ciclo visual
+ */
+.final-cta-section {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  
+  /* CTA final es más pequena que hero */
+  padding-top: var(--spacing-2xl);
+  padding-bottom: var(--spacing-2xl);
+  
+  @media (min-width: 768px) {
+    padding-top: var(--spacing-3xl);
+    padding-bottom: var(--spacing-3xl);
+  }
+}
+
+/**
+ * Headings en CTA final
+ */
+.final-cta-section h2 {
+  color: var(--color-white);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 6. VARIANTES VISUALES AVANZADAS                                 */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .section--bordered
+ * 
+ * Sección con borde superior
+ * Útil para separar visualmente
+ */
+.section--bordered {
+  border-top: 1px solid var(--color-gray-300);
+}
+
+/**
+ * .section--bordered-bottom
+ * 
+ * Sección con borde inferior
+ */
+.section--bordered-bottom {
+  border-bottom: 1px solid var(--color-gray-300);
+}
+
+/**
+ * .section--no-padding
+ * 
+ * Sección sin padding vertical
+ * ⚠️ Usar con precaución
+ */
+.section--no-padding {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/**
+ * .section--tight
+ * 
+ * Sección con padding reducido
+ */
+.section--tight {
+  padding-top: var(--spacing-xl);
+  padding-bottom: var(--spacing-xl);
+}
+
+/**
+ * .section--loose
+ * 
+ * Sección con padding extra
+ */
+.section--loose {
+  padding-top: var(--spacing-4xl);
+  padding-bottom: var(--spacing-4xl);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 7. SOMBRAS Y EFECTOS EN SECCIONES                               */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .section--shadow
+ * 
+ * Sección con sombra (efecto flotante)
+ * Usa para: Modales, overlays
+ */
+.section--shadow {
+  box-shadow: var(--shadow-xl);
+}
+
+/**
+ * .section--rounded
+ * 
+ * Sección con bordes redondeados
+ */
+.section--rounded {
+  border-radius: var(--radius-xl);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 8. GRADIENTES EN SECCIONES (Opcional)                           */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .section--gradient-dark
+ * 
+ * Fondo con gradiente oscuro
+ * De arriba a abajo (superior más oscuro)
+ */
+.section--gradient-dark {
+  background: linear-gradient(
+    180deg,
+    var(--color-dark) 0%,
+    #1F2937 100%
+  );
+  color: var(--color-white);
+}
+
+/**
+ * .section--gradient-light
+ * 
+ * Fondo con gradiente claro
+ */
+.section--gradient-light {
+  background: linear-gradient(
+    180deg,
+    var(--color-white) 0%,
+    var(--color-gray-50) 100%
+  );
+  color: var(--color-gray-700);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 9. OVERRIDE PADDING PARA CASOS ESPECÍFICOS                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * A veces una sección necesita padding diferente
+ * Usa data-attributes o clases específicas
+ */
+
+/**
+ * [data-padding="large"]
+ * Padding extra grande
+ */
+[data-padding="large"] {
+  padding-top: var(--spacing-4xl) !important;
+  padding-bottom: var(--spacing-4xl) !important;
+}
+
+/**
+ * [data-padding="small"]
+ * Padding reducido
+ */
+[data-padding="small"] {
+  padding-top: var(--spacing-md) !important;
+  padding-bottom: var(--spacing-md) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 10. ALINEACIÓN DE CONTENIDO EN SECCIONES                        */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .section--centered
+ * 
+ * Contenido centrado
+ */
+.section--centered {
+  text-align: center;
+}
+
+/**
+ * .section--left
+ * 
+ * Contenido alineado a izquierda (default)
+ */
+.section--left {
+  text-align: left;
+}
+
+/**
+ * .section--right
+ * 
+ * Contenido alineado a derecha
+ */
+.section--right {
+  text-align: right;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 11. COMBINACIONES COMUNES                                       */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Ejemplos de cómo usar múltiples clases:
+ * 
+ * Hero oscuro:
+ * <section class="hero-section section--dark">
+ * 
+ * Servicios blancos con borde:
+ * <section class="services-section section--white section--bordered">
+ * 
+ * CTA con fondo oscuro y padding extra:
+ * <section class="final-cta-section section--loose">
+ * 
+ * Sección gris con contenido centrado:
+ * <section class="section--light section--centered">
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 12. MEDIA QUERIES PARA RESPONSIVE PADDING                       */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * En pantallas muy pequeñas (< 480px)
+ * Reduce padding para máximo espacio
+ */
+@media (max-width: 479px) {
+  section {
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
+  }
+}
+
+/**
+ * En pantallas enormes (> 1440px)
+ * Aumenta padding ligeramente
+ */
+@media (min-width: 1440px) {
+  section {
+    padding-top: var(--spacing-4xl);
+    padding-bottom: var(--spacing-4xl);
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* NOTAS DE IMPLEMENTACIÓN                                            */
+/* ═════════════════════════════════════════════════════════════════
+
+1. PADDING ESTÁNDAR:
+   Mobile:  48px (var(--spacing-section-mobile))
+   Desktop: 64px (var(--spacing-section-desktop))
+   
+   Estos son totales (top + bottom)
+   Top solo:    24px
+   Bottom solo: 24px
+   
+   En variables.css como:
+   --spacing-section-mobile: var(--spacing-2xl);   // 48px
+   --spacing-section-desktop: var(--spacing-3xl);  // 64px
+
+2. COLORES DE FONDO:
+   --color-white:        #FFFFFF (default)
+   --color-dark:         #111827 (hero, footer)
+   --color-gray-100:     #F3F4F6 (alternancia)
+   
+   ✅ SIEMPRE usa variables, NUNCA hardcodees
+
+3. RITMO VISUAL:
+   Alternancia: Blanco → Oscuro → Blanco → Oscuro
+   
+   Hero:        Oscuro
+   Servicios:   Blanco
+   Cobertura:   Gris
+   Testimonios: Blanco
+   CTA Final:   Oscuro
+   
+   Esto crea flujo visual natural
+
+4. USO CORRECTO:
+   ✅ <section class="hero-section">
+   ✅ <section class="services-section section--white">
+   ✅ <section class="coverage-section section--light">
+   
+   ❌ <div class="section--dark">  (NO usar section generic)
+   
+   Si no tienes <section>, usa <div> sin problemas
+
+5. PADDING MANAGEMENT:
+   No añadas padding en .container
+   No añadas padding en .hero-content
+   
+   Todo padding vertical va en <section>
+   Todo padding horizontal va en .container
+   
+   Separación clara de responsabilidades
+
+6. OVERLAY EN HERO:
+   Si hero tiene background-image:
+   
+   HTML: <section style="background-image: url(...)">
+   CSS:  .hero-section::before crea el overlay oscuro
+   
+   Z-index del contenido debe ser > 0
+   En HTML, .hero-content está dentro <section>
+   Automáticamente está encima del ::before
+
+7. TEXT COLOR INHERITANCE:
+   Dentro de .section--dark, todo texto es blanco
+   - h1, h2, h3 → blanco
+   - p → gris claro
+   - small → gris muy claro
+   - links → amarillo acento
+   
+   Esto es automático por CSS cascade
+
+8. COMBINACIONES DE CLASES:
+   Puedes combinar múltiples clases:
+   
+   <section class="services-section section--light section--centered">
+     <!-- Servicios en gris, contenido centrado -->
+   </section>
+   
+   CSS cascade las aplica todas
+
+═════════════════════════════════════════════════════════════════ */

@@ -10,5 +10,8 @@ export const dom = {
 
   coverageContainer: document.querySelector<HTMLElement>("#coverage-container"),
 
-  floatingWhatsapp: document.querySelector<HTMLAnchorElement>("#floating-whatsapp")
+  floatingWhatsapp: document.querySelector<HTMLAnchorElement>("#floating-whatsapp"),
+
+  finalCtaCall: document.querySelector<HTMLAnchorElement>("#final-call-button"),
+  finalCtaWhatsapp: document.querySelector<HTMLAnchorElement>("#final-whatsapp-button")
 };

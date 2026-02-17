@@ -7,7 +7,8 @@ export const renderHero = (
 ): void => {
   if (!dom.heroTitle || !dom.heroCtaCall || !dom.heroCtaWhatsapp) return;
 
-  dom.heroTitle.textContent = `${business.businessName} - Atención 24 Horas`;
+  // SEO: H1 estático en HTML para evitar Layout Shift
+  // dom.heroTitle.textContent = `${business.businessName} - Atención 24 Horas`;
 
   const phoneLink = generatePhoneLink(business);
   const whatsappLink = generateWhatsAppLink(
@@ -15,6 +16,13 @@ export const renderHero = (
     "Necesito un servicio urgente de cerrajería."
   );
 
-  if (phoneLink) dom.heroCtaCall.href = phoneLink;
-  if (whatsappLink) dom.heroCtaWhatsapp.href = whatsappLink;
+  if (phoneLink) {
+    dom.heroCtaCall.href = phoneLink;
+    if (dom.finalCtaCall) dom.finalCtaCall.href = phoneLink;
+  }
+
+  if (whatsappLink) {
+    dom.heroCtaWhatsapp.href = whatsappLink;
+    if (dom.finalCtaWhatsapp) dom.finalCtaWhatsapp.href = whatsappLink;
+  }
 };

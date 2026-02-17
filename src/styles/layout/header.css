@@ -1,0 +1,803 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * HEADER.CSS - HEADER Y NAVEGACIÓN
+ * 
+ * Responsabilidad: Definir estilos para <header> y navegación
+ * Responsive navbar (desktop + mobile hamburger ready)
+ * Brand, nav items, CTA button
+ * Sticky/fixed positioning (opcional)
+ * 
+ * Orden de carga: NOVENO (después de responsive.css, antes de components)
+ * 
+ * Vinculado con:
+ * - .site-header (contenedor principal)
+ * - .container .header-content (flex layout)
+ * - .brand (logo/nombre)
+ * - .main-nav (navegación)
+ * - .nav-list (lista de links)
+ * - .nav-link (items individuales)
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 1. HEADER BASE - CONTENEDOR PRINCIPAL                           */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .site-header
+ * 
+ * Contenedor del header
+ * Fondo blanco, borde inferior sutil
+ * Posición: Static (default, sin sticky)
+ * 
+ * Características:
+ * - Fondo blanco
+ * - Borde sutil en base
+ * - Shadow opcional para separación
+ * - Padding manejado por .container
+ */
+.site-header {
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-gray-200);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000; /* Z-index alto y explícito */
+  transition: box-shadow var(--transition-base), background-color var(--transition-base);
+}
+
+/**
+ * VARIANTE: Header sticky
+ * 
+ * Si quieres que el header se quede en la parte superior:
+ * Descomenta lo siguiente y comenta lo anterior
+ */
+/*
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-index-sticky);
+}
+*/
+
+/**
+ * VARIANTE: Header fixed
+ * 
+ * Si quieres que sea fixed (overlay el contenido):
+ */
+/*
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-index-fixed);
+}
+
+body {
+  padding-top: 64px;  // Espacio para header fixed
+}
+*/
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 2. HEADER CONTENT - FLEX LAYOUT                                 */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .header-content (dentro de .container)
+ * 
+ * Flex layout que distribuye:
+ * - Brand (izquierda)
+ * - Nav (derecha)
+ * 
+ * Ya definido en container.css:
+ * display: flex
+ * justify-content: space-between
+ * align-items: center
+ * min-height: 64px (tablet: 80px)
+ * 
+ * Aquí refinamos si es necesario
+ */
+.header-content {
+  /* Ya hereda de container.css */
+  /* Podemos añadir refinamientos aquí */
+
+  /* Padding vertical dentro del header */
+  padding-top: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+
+  /* En tablet, más padding */
+  @media (min-width: 768px) {
+    padding-top: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 3. BRAND - LOGO Y NOMBRE DE LA EMPRESA                          */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .brand
+ * 
+ * Logo/nombre de la empresa (lado izquierdo)
+ * 
+ * En tu HTML: <div class="brand">Valle Seguro 24H</div>
+ */
+.brand {
+  position: relative;
+  z-index: 1010; /* Encima del menú mobile */
+  flex-grow: 0;
+  flex-shrink: 0;
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-dark);
+  white-space: nowrap;
+  transition: var(--transition-color);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-button);
+}
+
+/**
+ * .brand:hover
+ * 
+ * Efecto hover en el brand (si es clickeable)
+ */
+.brand:hover {
+  color: var(--color-primary);
+  background-color: var(--color-gray-50);
+}
+
+/**
+ * .brand::before (opcional - icono o marca)
+ * 
+ * Si quieres añadir un icono antes del nombre:
+ * .brand::before {
+ *   content: "🔐 ";
+ *   margin-right: 4px;
+ * }
+ */
+
+/**
+ * VARIANTE: Brand con logo imagen
+ * 
+ * Si usas logo como imagen:
+ * <a href="/" class="brand brand--logo">
+ *   <img src="logo.svg" alt="Valle Seguro 24H" />
+ * </a>
+ */
+.brand--logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 0;
+}
+
+.brand--logo img {
+  width: 48px;
+  height: auto;
+  display: block;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 4. NAVEGACIÓN PRINCIPAL - NAV                                   */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .main-nav
+ * 
+ * Contenedor de la navegación (lado derecho)
+ * 
+ * En tu HTML: <nav class="main-nav" role="navigation">
+ *               <ul class="nav-list">
+ */
+.main-nav {
+  /* Flex item que crece */
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  /* Flex layout para los items */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  /* Gap entre elementos */
+  gap: var(--spacing-lg);
+
+  /* En mobile, se oculta (ver media query abajo) */
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+/**
+ * VARIANTE: Nav mobile visible
+ * 
+ * Si usas un hamburger menu que toggle esta clase:
+ * .main-nav.is-open {
+ *   display: flex;
+ * }
+ */
+.main-nav.is-open {
+  display: flex;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 5. LISTA DE NAVEGACIÓN - NAV LIST                               */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .nav-list
+ * 
+ * Lista de links de navegación
+ * 
+ * En tu HTML: <ul class="nav-list">
+ *               <li><a href="#servicios" class="nav-link">Servicios</a></li>
+ *               <li><a href="#zonas" class="nav-link">Cobertura</a></li>
+ */
+.nav-list {
+  /* Reset de lista */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  /* Flex layout horizontal */
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-lg);
+  align-items: center;
+
+  /* En mobile, cambiar a vertical */
+  @media (max-width: 767px) {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 6. LINKS DE NAVEGACIÓN - NAV LINK                               */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .nav-link
+ * 
+ * Links individuales de navegación
+ * 
+ * En tu HTML: <a href="#servicios" class="nav-link">Servicios</a>
+ */
+.nav-link {
+  /* Tipografía */
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-700);
+  text-decoration: none;
+
+  /* Transición suave */
+  transition: var(--transition-color);
+
+  /* Padding para zona clickeable */
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-button);
+
+  /* Posición relativa para efecto subrayado */
+  position: relative;
+  display: inline-block;
+}
+
+/**
+ * .nav-link:hover
+ * 
+ * Efecto hover: cambio de color
+ */
+.nav-link:hover {
+  color: var(--color-primary);
+  background-color: var(--color-gray-50);
+}
+
+/**
+ * .nav-link:focus-visible
+ * 
+ * Focus para accesibilidad (teclado)
+ */
+.nav-link:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+}
+
+/**
+ * .nav-link::after (efecto subrayado animado)
+ * 
+ * Decoración visual (underline que crece en hover)
+ */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-primary);
+  transition: width var(--transition-fast);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/**
+ * .nav-link--cta
+ * 
+ * Link especial que se ve como botón CTA
+ * 
+ * En tu HTML: <a href="#contacto" class="nav-link nav-link--cta">Llamar</a>
+ */
+.nav-link--cta {
+  /* Estilo de botón primario */
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-weight: var(--font-weight-bold);
+
+  /* Sin underline para CTA */
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-button);
+}
+
+.nav-link--cta:hover {
+  background-color: var(--color-primary-hover);
+  color: var(--color-white);
+}
+
+.nav-link--cta::after {
+  display: none;
+}
+
+/**
+ * .nav-link.is-active
+ * 
+ * Link activo (página actual)
+ * Añadido por JavaScript basado en hash
+ */
+.nav-link.is-active {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+.nav-link.is-active::after {
+  width: 100%;
+  background-color: var(--color-primary);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 7. HAMBURGER MENU (MOBILE)                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .menu-toggle
+ * 
+ * Botón hamburger para abrir/cerrar nav en mobile
+ * 
+ * En tu HTML: <button class="menu-toggle" aria-label="Abrir menú">
+ *               <span></span>
+ *               <span></span>
+ *               <span></span>
+ *             </button>
+ */
+.menu-toggle {
+  position: relative;
+  z-index: 1010; /* Encima del menú mobile */
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-sm);
+  min-width: 44px;
+  min-height: 44px;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+/**
+ * .menu-toggle span (las 3 líneas)
+ */
+.menu-toggle span {
+  width: 24px;
+  height: 2px;
+  background-color: var(--color-dark);
+  border-radius: 1px;
+  transition: var(--transition-all);
+}
+
+/**
+ * .menu-toggle:hover
+ */
+.menu-toggle:hover span {
+  background-color: var(--color-primary);
+}
+
+/**
+ * .menu-toggle.is-open (animación X)
+ * 
+ * Cuando el menú está abierto, las líneas forman una X
+ */
+.menu-toggle.is-open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.is-open span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.menu-toggle.is-open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 8. HEADER MOBILE EXPANDED (Manejado en Media Queries)           */
+/* ─────────────────────────────────────────────────────────────── */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 9. MEDIA QUERIES Y RESPONSIVE                                   */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Mobile (< 768px)
+ * - Nav se oculta
+ * - Hamburger menu visible
+ * - Header más compacto
+ */
+@media (max-width: 767px) {
+  .site-header {
+    padding: var(--spacing-sm) 0;
+  }
+
+  .header-content {
+    min-height: 48px;
+    padding: var(--spacing-xs) 0;
+  }
+
+  .brand {
+    font-size: 1.125rem;
+  }
+
+  .main-nav {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  /* Estilos específicos cuando el menú está abierto */
+  .main-nav.is-mobile-open {
+    position: fixed;
+    top: 56px; /* Altura del header reducida */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: calc(100vh - 56px);
+    background-color: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(15px);
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-2xl);
+    z-index: 1005; /* Entre el header y el brand/toggle */
+    animation: mobileMenuFadeIn 0.3s ease-out forwards;
+  }
+
+  .main-nav.is-mobile-open .nav-list {
+    flex-direction: column !important;
+    gap: var(--spacing-md) !important;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .main-nav.is-mobile-open .nav-link {
+    width: 100%;
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-semibold);
+    text-align: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--color-dark);
+    border: none !important;
+    border-radius: var(--radius-md);
+    opacity: 0;
+    transform: translateY(15px);
+    animation: mobileNavLinkIn 0.4s ease-out forwards;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .main-nav.is-mobile-open .nav-link:hover {
+    background-color: var(--color-gray-100);
+    color: var(--color-primary);
+  }
+
+  .main-nav.is-mobile-open .nav-link:active {
+    background-color: var(--color-gray-200);
+  }
+
+  .main-nav.is-mobile-open li:nth-child(1) .nav-link { animation-delay: 0.05s; }
+  .main-nav.is-mobile-open li:nth-child(2) .nav-link { animation-delay: 0.1s; }
+  .main-nav.is-mobile-open li:nth-child(3) .nav-link { animation-delay: 0.15s; }
+  .main-nav.is-mobile-open li:nth-child(4) .nav-link { animation-delay: 0.2s; }
+
+  .main-nav.is-mobile-open .nav-link--cta {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .main-nav.is-mobile-open .nav-link--cta:hover {
+    background-color: var(--color-primary-hover);
+    color: var(--color-white);
+    transform: translateY(-2px);
+  }
+
+  .main-nav.is-mobile-open .nav-link--cta:active {
+    background-color: var(--color-primary-hover);
+    transform: translateY(0);
+  }
+}
+
+@keyframes mobileMenuFadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes mobileNavLinkIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/**
+ * Tablet (768px - 1023px)
+ */
+@media (min-width: 768px) {
+  .header-content {
+    min-height: 72px;
+  }
+
+  .main-nav {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+}
+
+/**
+ * Desktop (1024px+)
+ */
+@media (min-width: 1024px) {
+  .site-header {
+    padding: 0;
+  }
+
+  .header-content {
+    min-height: 80px;
+  }
+
+  .brand {
+    font-size: 1.5rem;
+  }
+
+  .nav-list {
+    gap: var(--spacing-2xl);
+  }
+
+  .nav-link {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 10. VARIANTES Y ESTADOS ESPECIALES                              */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .header--sticky
+ * 
+ * Alternativa a .is-sticky para aplicar estilos sticky
+ * Úsalo si cambias el header a sticky
+ */
+/* Estado sticky activo (scrolled) */
+.site-header.is-scrolled {
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+/**
+ * .header--transparent
+ * 
+ * Header con fondo transparente (en hero overlay)
+ */
+.site-header.is-transparent {
+  background-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.site-header.is-transparent .nav-link {
+  color: var(--color-white);
+}
+
+.site-header.is-transparent .nav-link:hover {
+  color: var(--color-accent);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.site-header.is-transparent .brand {
+  color: var(--color-white);
+}
+
+/**
+ * .header--minimal
+ * 
+ * Header sin bordes ni sombra
+ */
+.site-header.is-minimal {
+  border-bottom: none;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 11. ANIMACIONES Y TRANSICIONES                                  */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Transición suave cuando se cambia el header
+ */
+.site-header {
+  transition:
+    background-color var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base);
+}
+
+.nav-link {
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+/**
+ * Animación para nav items al aparecer
+ */
+@keyframes slideDownNav {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-list li {
+  animation: slideDownNav var(--duration-base) var(--ease-out) backwards;
+}
+
+.nav-list li:nth-child(1) {
+  animation-delay: 0ms;
+}
+.nav-list li:nth-child(2) {
+  animation-delay: 50ms;
+}
+.nav-list li:nth-child(3) {
+  animation-delay: 100ms;
+}
+.nav-list li:nth-child(4) {
+  animation-delay: 150ms;
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* NOTAS DE IMPLEMENTACIÓN                                            */
+/* ═════════════════════════════════════════════════════════════════
+
+1. ESTRUCTURA HTML ESPERADA:
+
+   <header class="site-header">
+     <div class="container header-content">
+       <div class="brand">Valle Seguro 24H</div>
+       
+       <nav class="main-nav" role="navigation" aria-label="Navegación principal">
+         <ul class="nav-list">
+           <li><a href="#servicios" class="nav-link">Servicios</a></li>
+           <li><a href="#zonas" class="nav-link">Cobertura</a></li>
+           <li><a href="#testimonios" class="nav-link">Testimonios</a></li>
+           <li><a href="#contacto" class="nav-link nav-link--cta">Llamar</a></li>
+         </ul>
+       </nav>
+       
+       <button class="menu-toggle" aria-label="Abrir menú">
+         <span></span>
+         <span></span>
+         <span></span>
+       </button>
+     </div>
+   </header>
+
+2. JAVASCRIPT NECESARIO (básico):
+
+   // Toggle hamburger menu
+   const menuToggle = document.querySelector('.menu-toggle');
+   const mainNav = document.querySelector('.main-nav');
+   
+   menuToggle?.addEventListener('click', () => {
+     menuToggle.classList.toggle('is-open');
+     mainNav.classList.toggle('is-mobile-open');
+   });
+   
+   // Cerrar menú al hacer click en un link
+   document.querySelectorAll('.nav-link').forEach(link => {
+     link.addEventListener('click', () => {
+       menuToggle.classList.remove('is-open');
+       mainNav.classList.remove('is-mobile-open');
+     });
+   });
+
+3. ESTADOS DEL HEADER:
+
+   .site-header              → Default (blanco, estático)
+   .site-header.is-sticky    → Con sticky position
+   .site-header.is-transparent → Transparente (en hero)
+   .site-header.is-minimal   → Sin bordes
+
+4. RESPONSIVE DESIGN:
+
+   Mobile (< 768px):
+   - Nav oculta
+   - Hamburger visible
+   - Altura reducida
+   - Dropdown menu
+
+   Tablet (768px+):
+   - Nav visible horizontal
+   - Sin hamburger
+   - Altura media
+
+   Desktop (1024px+):
+   - Nav con spacing generoso
+   - Altura máxima
+   - Transiciones suaves
+
+5. ACCESIBILIDAD:
+
+   ✅ role="navigation"
+   ✅ aria-label en nav
+   ✅ aria-label en button
+   ✅ Focus visible en links
+   ✅ Tamaño mínimo 44px en botones
+   ✅ Contraste suficiente
+
+6. PERFORMANCE:
+
+   - Usa transiciones CSS (no JavaScript)
+   - Gap en lugar de margin (más eficiente)
+   - Sin animaciones en elementos no esenciales
+   - Respeta prefers-reduced-motion
+
+7. CUSTOMIZACIÓN:
+
+   Cambiar color principal:
+   .nav-link--cta { background-color: var(--color-primary); }
+
+   Cambiar ancho máximo:
+   .site-header .container { max-width: 1400px; }
+
+   Hacer header sticky:
+   .site-header { position: sticky; top: 0; }
+
+═════════════════════════════════════════════════════════════════ */

@@ -1,0 +1,424 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * RESPONSIVE.CSS - MEDIA QUERIES Y COMPORTAMIENTOS RESPONSIVOS
+ * 
+ * Responsabilidad: Centralizar media queries comunes
+ * Clases para show/hide en breakpoints
+ * Comportamientos responsive globales
+ * 
+ * Orden de carga: OCTAVO (después de sections.css)
+ * 
+ * Filosofía: Mobile-first → Expand a Tablet → Expand a Desktop
+ * 
+ * Nota: Queries ESPECÍFICAS de componentes van en sus archivos
+ * Esto es para queries GENERALES reutilizables
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 1. BREAKPOINTS (Valores de referencia)                          */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Breakpoints definidos en variables.css:
+ * 
+ * --breakpoint-sm: 640px   (Tablets pequeñas)
+ * --breakpoint-md: 768px   (Tablets - MAIN)
+ * --breakpoint-lg: 1024px  (Laptops)
+ * --breakpoint-xl: 1280px  (Desktops)
+ * --breakpoint-2xl: 1536px (Desktops grandes)
+ * 
+ * En media queries (no se pueden usar variables):
+ * @media (min-width: 768px) { }
+ * 
+ * Esta es la convención:
+ * Mobile: 320px - 639px (default)
+ * Tablet: 640px - 1023px
+ * Desktop: 1024px+
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 2. CLASES PARA MOSTRAR/OCULTAR EN BREAKPOINTS                   */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .hide-mobile
+ * 
+ * Oculta elemento en mobile
+ * Muestra en tablet+
+ * 
+ * Uso: Elementos que solo se ven en desktop
+ * <nav class="hide-mobile">
+ *   <!-- Nav desktop, se oculta en mobile -->
+ * </nav>
+ */
+.hide-mobile {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .hide-mobile {
+    display: block;
+  }
+}
+
+/**
+ * .hide-tablet
+ * 
+ * Oculta en tablet (640px-1023px)
+ * Muestra en mobile y desktop
+ */
+.hide-tablet {
+  display: block;
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .hide-tablet {
+    display: none;
+  }
+}
+
+/**
+ * .hide-desktop
+ * 
+ * Oculta en desktop (1024px+)
+ * Muestra en mobile y tablet
+ * 
+ * Uso: Elementos solo para mobile/tablet
+ * <button class="hide-desktop">Menú</button>
+ */
+.hide-desktop {
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .hide-desktop {
+    display: none;
+  }
+}
+
+/**
+ * .show-mobile
+ * 
+ * Muestra solo en mobile
+ * Oculta en tablet+
+ * 
+ * ⚠️ Opuesto a .hide-mobile
+ */
+.show-mobile {
+  display: block;
+}
+
+@media (min-width: 640px) {
+  .show-mobile {
+    display: none;
+  }
+}
+
+/**
+ * .show-desktop
+ * 
+ * Muestra solo en desktop
+ * Oculta en mobile y tablet
+ */
+.show-desktop {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .show-desktop {
+    display: block;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 3. COMPORTAMIENTO DE FUENTES RESPONSIVO                         */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * En pantallas muy pequeñas (< 480px)
+ * Reduce tamaño de fuentes para máxima legibilidad
+ */
+@media (max-width: 479px) {
+  /* H1 más pequeño en mobile extremo */
+  h1 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  
+  /* H2 más pequeño */
+  h2 {
+    font-size: clamp(1.25rem, 3.5vw, 1.875rem);
+  }
+  
+  /* Font size base sigue siendo 16px (no bajar más) */
+  body {
+    font-size: 16px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 4. AJUSTES DE LAYOUT EN MOBILE PEQUEÑO                          */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * < 480px: Pantallas muy pequeñas (iPhone 6, etc)
+ * Reduce espaciado agresivamente
+ */
+@media (max-width: 479px) {
+  :root {
+    /* Reducciones de spacing */
+    --spacing-section-mobile: 32px;
+    --container-padding-mobile: 12px;
+  }
+  
+  /* Gap en grids más pequeño */
+  .grid {
+    gap: var(--gap-sm);
+  }
+  
+  .grid--auto {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 5. TABLET (640px - 1023px)                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * En tablet:
+ * - Aumenta padding
+ * - Grids a 2 columnas
+ * - Más espacio aprovechado
+ */
+@media (min-width: 640px) {
+  /* Tablet: Padding intermedio */
+  :root {
+    --container-padding-mobile: 20px;
+  }
+  
+  /* Muestra elementos ocultos en mobile */
+  .hide-mobile {
+    display: block;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 6. TABLET GRANDE (768px+) - MAIN BREAKPOINT                     */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * 768px es el breakpoint principal
+ * Aquí ocurren la mayoría de cambios
+ */
+@media (min-width: 768px) {
+  /* Contenedor toma padding de tablet */
+  .container {
+    padding-left: var(--container-padding-tablet);
+    padding-right: var(--container-padding-tablet);
+  }
+  
+  /* Secciones: padding generoso */
+  section {
+    padding-top: var(--spacing-section-desktop);
+    padding-bottom: var(--spacing-section-desktop);
+  }
+  
+  /* Header más grande */
+  header {
+    min-height: 80px;
+  }
+  
+  /* Grids: 2 columnas */
+  .grid--auto {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  
+  .grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .grid--3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 7. LAPTOP (1024px - 1279px)                                     */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * En laptop:
+ * - Layout más expansivo
+ * - Grids a 3 columnas
+ * - Máximo padding
+ */
+@media (min-width: 1024px) {
+  /* Máximo padding en container */
+  .container {
+    padding-left: var(--container-padding-desktop);
+    padding-right: var(--container-padding-desktop);
+  }
+  
+  /* Grids: 3 columnas */
+  .grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .grid--auto {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+  
+  /* Mostrar elementos desktop */
+  .show-desktop {
+    display: block;
+  }
+  
+  .hide-desktop {
+    display: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 8. DESKTOP GRANDE (1280px+)                                     */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * En desktop extra grande:
+ * - Más espacio lateral
+ * - Máxima expansión de contenido
+ */
+@media (min-width: 1280px) {
+  :root {
+    /* Si necesitas cambios en variables */
+    /* Aquí iría --spacing-xl: 2.5rem; por ejemplo */
+  }
+  
+  /* Hero más grande */
+  .hero-section {
+    min-height: 700px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 9. ULTRA WIDE (1536px+) - Monitores grandes                     */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * En pantallas gigantes:
+ * - Mantén max-width (1200px) para legibilidad
+ * - No hagas que se vea vacío
+ * - Considera márgenes laterales
+ */
+@media (min-width: 1536px) {
+  .container {
+    /* Max-width se mantiene
+    /* Esto previene líneas de texto demasiado largas */
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 10. ORIENTACIÓN (Landscape vs Portrait)                         */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * En orientación landscape en dispositivos pequeños
+ * Reduce altura de elementos
+ */
+@media (max-height: 500px) and (orientation: landscape) {
+  /* Reduce height de hero en landscape */
+  .hero-section {
+    min-height: auto;
+    padding: var(--spacing-lg) 0;
+  }
+  
+  /* Reduce padding en secciones */
+  section {
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 11. PIXEL DENSITY (Retina displays)                             */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Pantallas de alta densidad (retina, 2x+)
+ * A veces necesitan ajustes de bordes
+ */
+@media (min-device-pixel-ratio: 2),
+       (min-resolution: 192dpi) {
+  /* Bordes más finos en retina */
+  /* Generalmente, CSS maneja esto automáticamente */
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 12. PREFERENCIAS DE USUARIO                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * prefers-reduced-motion
+ * 
+ * Respeta la preferencia del usuario
+ * Para usuarios con motion sickness, etc
+ * 
+ * IMPORTANTE: Ya está en base/transitions.css
+ * Pero lo repetimos aquí para documentar
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/**
+ * prefers-color-scheme (Dark mode)
+ * 
+ * Para futura implementación de dark mode
+ * Aquí van variables oscuras
+ */
+@media (prefers-color-scheme: dark) {
+  /* Si implementamos dark mode */
+  /* :root { --color-gray-700: #D1D5DB; } */
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 13. IMPRESIÓN (Print media)                                     */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Estilos para imprimir la página
+ */
+@media print {
+  /* Oculta elementos innecesarios en print */
+  .hide-print {
+    display: none;
+  }
+  
+  /* Fondos oscuros → blancos en print */
+  .section--dark {
+    background-color: var(--color-white);
+    color: var(--color-black);
+  }
+  
+  /* Sin sombras en print */
+  * {
+    box-shadow: none !important;
+  }
+  
+  /* Links visibles en print */
+  a {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+  
+  /* Saltos de página donde sea necesario */
+  section {
+    page-break-inside: avoid;
+  }
+}

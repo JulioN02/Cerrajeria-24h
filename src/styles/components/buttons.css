@@ -1,0 +1,677 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * BUTTONS.CSS - SISTEMA COMPLETO DE BOTONES
+ * 
+ * Responsabilidad: Definir TODOS los tipos de botones
+ * Variantes: primario (rojo urgencia), secundario (outline)
+ * Tamaños: sm, md (default), lg
+ * Estados: default, hover, active, disabled, focus
+ * 
+ * Orden de carga: UNDÉCIMO (después de layout/)
+ * 
+ * Uso en HTML:
+ * <button class="btn btn--primary">Llamar Ahora</button>
+ * <a href="#" class="btn btn--secondary">WhatsApp</a>
+ * <button class="btn btn--sm btn--primary">Aceptar</button>
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 1. BOTÓN BASE - ESTILOS COMUNES A TODOS                         */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .btn
+ * 
+ * Base para TODOS los botones
+ * Heredan de aquí, luego variantes especializan
+ * 
+ * En tu HTML (cualquiera de estos funciona):
+ * <button class="btn btn--primary">
+ * <a href="#" class="btn btn--primary">
+ * <input type="submit" class="btn btn--primary">
+ */
+.btn {
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  
+  /* Dimensiones */
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 2px solid transparent;
+  border-radius: var(--radius-button);
+  
+  /* Tipografía */
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-body);
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  
+  /* Interacción */
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  
+  /* Transición */
+  transition: var(--transition-all);
+  
+  /* Accesibilidad: tamaño mínimo clickeable */
+  min-height: 44px;
+  min-width: 44px;
+  
+  /* Reset de estilos nativos */
+  border-style: solid;
+  box-sizing: border-box;
+}
+
+/**
+ * .btn:disabled, .btn[disabled]
+ * 
+ * Estado deshabilitado
+ */
+.btn:disabled,
+.btn[disabled] {
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/**
+ * .btn:active
+ * 
+ * Estado presionado (mouse down)
+ */
+.btn:active {
+  transform: scale(0.98);
+}
+
+/**
+ * .btn:focus-visible
+ * 
+ * Focus para accesibilidad (teclado)
+ */
+.btn:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--radius-button);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 2. VARIANTE PRIMARIA - BOTÓN ROJO (CONVERSIÓN)                  */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .btn--primary
+ * 
+ * Botón principal para CTAs críticas
+ * Color rojo oscuro (#B91C1C)
+ * Usado para: "Llamar Ahora", "WhatsApp", CTAs principales
+ * 
+ * Psicología: Urgencia controlada, acción inmediata
+ * 
+ * En tu HTML: <button class="btn btn--primary">Llamar Ahora</button>
+ */
+.btn--primary {
+  /* Colores */
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+
+/**
+ * .btn--primary:hover
+ * 
+ * Hover: Color más oscuro + sombra + elevación
+ */
+.btn--primary:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/**
+ * .btn--primary:active
+ * 
+ * Presionado: sin elevación
+ */
+.btn--primary:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/**
+ * .btn--primary:focus-visible
+ * 
+ * Focus: outline blanco sobre fondo rojo
+ */
+.btn--primary:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+/**
+ * .btn--primary:disabled
+ * 
+ * Deshabilitado: más transparente
+ */
+.btn--primary:disabled {
+  background-color: #D32F2F;
+  opacity: 0.5;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 3. VARIANTE SECUNDARIA - BOTÓN OUTLINE (ALTERNATIVA)            */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .btn--secondary
+ * 
+ * Botón alternativo para opciones secundarias
+ * Fondo blanco, borde rojo
+ * Usado para: "WhatsApp", opciones, acciones alternativas
+ * 
+ * En tu HTML: <button class="btn btn--secondary">WhatsApp</button>
+ */
+.btn--secondary {
+  /* Colores */
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/**
+ * .btn--secondary:hover
+ * 
+ * Hover: fondo rojo, texto blanco (invierte)
+ */
+.btn--secondary:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/**
+ * .btn--secondary:active
+ */
+.btn--secondary:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/**
+ * .btn--secondary:focus-visible
+ */
+.btn--secondary:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 4. VARIANTE OUTLINE - BOTÓN TRANSPARENTE (MINIMAL)              */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .btn--outline
+ * 
+ * Botón minimalista, solo borde
+ * Fondo transparente, borde gris
+ * Usado para acciones opcionales
+ */
+.btn--outline {
+  background-color: transparent;
+  color: var(--color-gray-700);
+  border-color: var(--color-gray-300);
+}
+
+/**
+ * .btn--outline:hover
+ */
+.btn--outline:hover {
+  background-color: var(--color-gray-50);
+  color: var(--color-gray-900);
+  border-color: var(--color-gray-500);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 5. VARIANTE SUCCESS - BOTÓN VERDE (CONFIRMACIÓN)                */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .btn--success
+ * 
+ * Botón verde para acciones positivas
+ * Confirmación, envío, completar
+ */
+.btn--success {
+  background-color: var(--color-success);
+  color: var(--color-white);
+  border-color: var(--color-success);
+}
+
+/**
+ * .btn--success:hover
+ */
+.btn--success:hover {
+  background-color: #059669;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 6. TAMAÑOS DE BOTÓN                                             */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .btn--sm
+ * 
+ * Botón pequeño
+ * Menos padding, fuente menor
+ * Usado para acciones menores
+ */
+.btn--sm {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-small);
+  min-height: 36px;
+  min-width: 36px;
+}
+
+/**
+ * .btn--md (default)
+ * 
+ * Botón mediano (default, no necesita clase)
+ * Ya está en .btn
+ */
+
+/**
+ * .btn--lg
+ * 
+ * Botón grande
+ * Más padding, fuente mayor
+ * Usado para CTAs principales, hero buttons
+ */
+.btn--lg {
+  padding: var(--spacing-lg) var(--spacing-2xl);
+  font-size: 1.125rem;
+  font-weight: var(--font-weight-bold);
+  min-height: 52px;
+  min-width: 52px;
+}
+
+/**
+ * .btn--xl
+ * 
+ * Botón extra grande (menos común)
+ * Para hero sections muy prominentes
+ */
+.btn--xl {
+  padding: var(--spacing-2xl) var(--spacing-3xl);
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold);
+  min-height: 60px;
+  min-width: 60px;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 7. ANCHO Y FILL                                                 */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .btn--block
+ * 
+ * Botón que ocupa todo el ancho disponible
+ * Usado en móvil, formularios
+ */
+.btn--block {
+  width: 100%;
+}
+
+/**
+ * .btn--block-sm
+ * 
+ * Botón 100% ancho solo en mobile
+ */
+.btn--block-sm {
+  @media (max-width: 479px) {
+    width: 100%;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 8. BOTÓN CON ICONO                                              */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .btn--icon
+ * 
+ * Botón que es principalmente un icono
+ * Cuadrado, sin padding lateral excesivo
+ */
+.btn--icon {
+  padding: var(--spacing-sm);
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  font-size: 0;
+}
+
+.btn--icon svg,
+.btn--icon i {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+/**
+ * .btn--icon-left, .btn--icon-right
+ * 
+ * Botón con icono a los lados
+ */
+.btn--icon-left {
+  flex-direction: row-reverse;
+}
+
+.btn--icon-right {
+  flex-direction: row;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 9. GRUPO DE BOTONES                                             */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .btn-group
+ * 
+ * Contenedor para agrupar botones
+ * Usado en hero, CTAs
+ * 
+ * En tu HTML: <div class="btn-group">
+ *               <button class="btn btn--primary">Llamar</button>
+ *               <button class="btn btn--secondary">WhatsApp</button>
+ *             </div>
+ */
+.btn-group {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  
+  /* En mobile, stack vertical */
+  @media (max-width: 479px) {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  /* En tablet+, horizontal */
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+}
+
+/**
+ * .btn-group--right
+ * 
+ * Grupo alineado a la derecha
+ */
+.btn-group--right {
+  justify-content: flex-end;
+}
+
+/**
+ * .btn-group--center
+ * 
+ * Grupo centrado
+ */
+.btn-group--center {
+  justify-content: center;
+}
+
+/**
+ * .btn-group--spaced
+ * 
+ * Grupo con mucho espacio entre botones
+ */
+.btn-group--spaced {
+  gap: var(--spacing-lg);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 10. BOTÓN LOADING (EN PROGRESO)                                 */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .btn.is-loading
+ * 
+ * Estado cuando el botón está procesando
+ * Deshabilitado visualmente, con spinner
+ * 
+ * En tu HTML: <button class="btn btn--primary is-loading">
+ *               <span class="btn-loading-spinner"></span>
+ *               Procesando...
+ *             </button>
+ */
+.btn.is-loading {
+  pointer-events: none;
+  opacity: var(--opacity-disabled);
+}
+
+/**
+ * .btn-loading-spinner
+ * 
+ * Spinner animado dentro del botón
+ */
+.btn-loading-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: rotate 1s linear infinite;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 11. BOTÓN ACTIVO                                                */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .btn.is-active
+ * 
+ * Estado activo (para toggle buttons, filtros)
+ * Añadido por JavaScript
+ */
+.btn.is-active {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 12. VARIACIONES VISUALES                                        */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .btn--rounded
+ * 
+ * Botón con bordes muy redondeados (píldora)
+ */
+.btn--rounded {
+  border-radius: var(--radius-full);
+}
+
+/**
+ * .btn--flat
+ * 
+ * Botón sin sombra ni elevación en hover
+ * Minimalista
+ */
+.btn--flat {
+  box-shadow: none;
+}
+
+.btn--flat:hover {
+  box-shadow: none;
+  transform: none;
+}
+
+/**
+ * .btn--uppercase
+ * 
+ * Texto en mayúsculas (menos común)
+ */
+.btn--uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 13. ANIMACIONES                                                 */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Transición de colores en hover
+ */
+.btn {
+  transition: background-color var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast),
+              box-shadow var(--transition-base),
+              transform var(--transition-base);
+}
+
+/**
+ * @keyframes rotate
+ * 
+ * Para spinner de loading
+ */
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/**
+ * Pulso sutil (para botones destacados)
+ */
+@keyframes buttonPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(185, 28, 28, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(185, 28, 28, 0);
+  }
+}
+
+.btn--primary.pulse {
+  animation: buttonPulse 2s infinite;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 14. RESPONSIVE ADJUSTMENTS                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * En pantallas muy pequeñas, botones más grandes
+ */
+@media (max-width: 479px) {
+  .btn {
+    width: 100%;
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+  
+  .btn-group {
+    flex-direction: column;
+  }
+}
+
+/**
+ * En tablet+, botones con más padding
+ */
+@media (min-width: 768px) {
+  .btn {
+    padding: var(--spacing-md) var(--spacing-xl);
+  }
+}
+
+/**
+ * En desktop, más espacio entre botones
+ */
+@media (min-width: 1024px) {
+  .btn-group {
+    gap: var(--spacing-lg);
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* NOTAS DE IMPLEMENTACIÓN                                            */
+/* ═════════════════════════════════════════════════════════════════
+
+1. TABLA DE COMBINACIONES RECOMENDADAS:
+
+   Caso de Uso              | Clase
+   ─────────────────────────┼──────────────────────────────
+   CTA principal (hero)     | .btn .btn--primary .btn--lg
+   CTA secundario           | .btn .btn--secondary
+   Botón pequeño            | .btn .btn--sm
+   Botón grupo              | .btn-group > .btn...
+   Botón deshabilitado      | .btn:disabled
+   Botón en carga           | .btn.is-loading
+   Botón activo (filter)    | .btn.is-active
+
+2. EJEMPLOS DE USO:
+
+   ✅ Botón primario grande:
+   <button class="btn btn--primary btn--lg">Llamar Ahora</button>
+
+   ✅ Grupo de botones:
+   <div class="btn-group">
+     <button class="btn btn--primary">Llamar</button>
+     <button class="btn btn--secondary">WhatsApp</button>
+   </div>
+
+   ✅ Botón pequeño:
+   <button class="btn btn--sm btn--secondary">Más info</button>
+
+   ✅ Link como botón:
+   <a href="/servicios" class="btn btn--primary">Ver Servicios</a>
+
+   ✅ Botón deshabilitado:
+   <button class="btn btn--primary" disabled>No disponible</button>
+
+3. ACCESIBILIDAD:
+
+   ✅ min-height: 44px (tamaño táctil)
+   ✅ Focus visible (outline)
+   ✅ Contraste suficiente (WCAG AA)
+   ✅ No depende de color solo (usa también forma/peso)
+
+4. PERFORMANCE:
+
+   - Usa transiciones CSS (no JavaScript)
+   - Transform: scale/translateY (no anima layout)
+   - Gap en lugar de margin
+   - Respeta prefers-reduced-motion
+
+5. CUSTOMIZACIÓN:
+
+   Cambiar color primario:
+   .btn--primary { background-color: var(--color-primary); }
+
+   Cambiar borde radius:
+   .btn { border-radius: var(--radius-button); }
+
+   Hacer botones más anchos:
+   .btn { padding-left: 32px; padding-right: 32px; }
+
+═════════════════════════════════════════════════════════════════ */

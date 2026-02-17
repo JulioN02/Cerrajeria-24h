@@ -1,0 +1,595 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * GRID.CSS - SISTEMAS DE LAYOUT (GRID Y FLEXBOX)
+ * 
+ * Responsabilidad: Definir .grid, .flex para layouts responsivos
+ * Soportar grids automáticos, 2-col, 3-col
+ * Utilities para alignment, justification, gaps
+ * 
+ * Orden de carga: SEXTO (después de container.css)
+ * 
+ * Filosofía:
+ * - Mobile-first: 1 columna default
+ * - Tablet+: Se expande a 2 columnas
+ * - Desktop+: Se expande a 3 columnas
+ * 
+ * Uso en HTML:
+ * <div class="grid grid--auto">
+ *   <div class="card">...</div>
+ *   <div class="card">...</div>
+ * </div>
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 1. GRID BASE - CSS GRID SYSTEM                                  */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .grid
+ * 
+ * Grid base con gap responsivo
+ * Todas las variantes heredan de aquí
+ * 
+ * Default: 1 columna (mobile-first)
+ */
+.grid {
+  /* Display grid */
+  display: grid;
+  
+  /* Template: 1 columna mobile */
+  grid-template-columns: 1fr;
+  
+  /* Gap responsivo */
+  gap: var(--gap-md);
+  
+  /* Auto height */
+  grid-auto-flow: row;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 2. GRID AUTO-FIT (RESPONSIVE AUTOMÁTICO)                        */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .grid--auto
+ * 
+ * Grid que se adapta automáticamente
+ * Basado en minmax (tamaño mínimo de item)
+ * 
+ * Mobile: 1 columna (items > 280px)
+ * Tablet: 2 columnas cuando hay espacio
+ * Desktop: 3 columnas cuando hay espacio
+ * 
+ * Mejor para: Servicios, testimonios, cards variables
+ * 
+ * Uso: <div class="grid grid--auto">
+ *        <div class="service-card">...</div>
+ *        <div class="service-card">...</div>
+ *      </div>
+ */
+.grid--auto {
+  /* auto-fit: Adapta número de columnas */
+  /* minmax(280px, 1fr): Mín 280px, máx 1fr */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  
+  /* Gap más grande para cards */
+  gap: var(--gap-lg);
+}
+
+/* Optimización para tablet */
+@media (min-width: 768px) {
+  .grid--auto {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+}
+
+/* Optimización para desktop */
+@media (min-width: 1024px) {
+  .grid--auto {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--gap-md);
+    justify-content: center;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 3. GRID 2 COLUMNAS                                              */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .grid--2
+ * 
+ * Exactamente 2 columnas
+ * Mobile: 1 columna
+ * Tablet+: 2 columnas
+ * 
+ * Mejor para: Contenido balanceado (texto + imagen)
+ * 
+ * Uso: <div class="grid grid--2">
+ *        <div class="hero-info">...</div>
+ *        <div class="hero-image">...</div>
+ *      </div>
+ */
+.grid--2 {
+  /* Mobile: 1 columna */
+  grid-template-columns: 1fr;
+  gap: var(--gap-2xl);
+}
+
+@media (min-width: 768px) {
+  .grid--2 {
+    /* Tablet+: 2 columnas */
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 4. GRID 3 COLUMNAS                                              */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .grid--3
+ * 
+ * Exactamente 3 columnas
+ * Mobile: 1 columna
+ * Tablet: 2 columnas
+ * Desktop+: 3 columnas
+ * 
+ * Mejor para: Muchos items pequeños
+ */
+.grid--3 {
+  /* Mobile: 1 columna */
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .grid--3 {
+    /* Tablet: 2 columnas */
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid--3 {
+    /* Desktop: 3 columnas */
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap-lg);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 5. GRID 4 COLUMNAS (Para layouts complejos)                     */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .grid--4
+ * 
+ * Exactamente 4 columnas
+ * Mobile: 1 columna
+ * Tablet: 2 columnas
+ * Desktop: 4 columnas
+ */
+.grid--4 {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .grid--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid--4 {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--gap-md);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 6. FLEXBOX BASE                                                 */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .flex
+ * 
+ * Flexbox base para layouts lineales
+ * Default: row, con gap
+ * 
+ * Mejor para: Navs, listas horizontales, botones alineados
+ * 
+ * Uso: <div class="flex gap-lg">
+ *        <button class="btn">...</button>
+ *        <button class="btn">...</button>
+ *      </div>
+ */
+.flex {
+  display: flex;
+  
+  /* Default: row direction */
+  flex-direction: row;
+  
+  /* Flex items comparten espacio */
+  flex-wrap: wrap;
+  
+  /* Gap entre items */
+  gap: var(--gap-md);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 7. FLEXBOX UTILITIES                                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .flex--between
+ * 
+ * Distribuye items: primero a izquierda, últimos a derecha
+ * Uso: Navbars, headers, footers
+ * 
+ * justify-content: space-between
+ * align-items: center
+ */
+.flex--between {
+  justify-content: space-between;
+  align-items: center;
+}
+
+/**
+ * .flex--center
+ * 
+ * Centra items horizontal y verticalmente
+ * 
+ * Uso: Modales, hero centering, iconos
+ */
+.flex--center {
+  justify-content: center;
+  align-items: center;
+}
+
+/**
+ * .flex--start
+ * 
+ * Items alineados al inicio
+ */
+.flex--start {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+/**
+ * .flex--end
+ * 
+ * Items alineados al final
+ */
+.flex--end {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+/**
+ * .flex--column
+ * 
+ * Items apilados verticalmente
+ * Útil para: Listas, cards con contenido vertical
+ */
+.flex--column {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/**
+ * .flex--column-center
+ * 
+ * Items apilados verticalmente y centrados
+ */
+.flex--column-center {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/**
+ * .flex--wrap
+ * 
+ * Items se envuelven en múltiples líneas
+ */
+.flex--wrap {
+  flex-wrap: wrap;
+}
+
+/**
+ * .flex--nowrap
+ * 
+ * Items NO se envuelven (no wrapping)
+ * ⚠️ Usar con precaución en mobile
+ */
+.flex--nowrap {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 8. FLEX GROW Y SHRINK                                           */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .flex-grow
+ * 
+ * Item crece para llenar espacio disponible
+ */
+.flex-grow {
+  flex-grow: 1;
+}
+
+/**
+ * .flex-shrink
+ * 
+ * Item se encoge si es necesario
+ */
+.flex-shrink {
+  flex-shrink: 1;
+}
+
+/**
+ * .flex-none
+ * 
+ * Item no crece ni se encoge
+ */
+.flex-none {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 9. GAP UTILITIES                                                */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .gap-xs, .gap-sm, .gap-md, .gap-lg, .gap-xl
+ * 
+ * Controla spacing entre items en grid/flex
+ * 
+ * Uso: <div class="grid gap-lg">
+ */
+.gap-xs {
+  gap: var(--gap-xs);
+}
+
+.gap-sm {
+  gap: var(--gap-sm);
+}
+
+.gap-md {
+  gap: var(--gap-md);
+}
+
+.gap-lg {
+  gap: var(--gap-lg);
+}
+
+.gap-xl {
+  gap: var(--gap-xl);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 10. ALIGNMENT UTILITIES                                         */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Para grid items
+ */
+
+/* align-items (vertical en horizontal grid) */
+.items-start {
+  align-items: flex-start;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-end {
+  align-items: flex-end;
+}
+
+.items-stretch {
+  align-items: stretch;
+}
+
+/* justify-items (horizontal en horizontal grid) */
+.justify-start {
+  justify-items: start;
+}
+
+.justify-center {
+  justify-items: center;
+}
+
+.justify-end {
+  justify-items: end;
+}
+
+.justify-stretch {
+  justify-items: stretch;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 11. GRID CON ÁREAS NOMBRADAS (Para layouts complejos)           */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .grid--areas
+ * 
+ * Para layouts con estructura clara
+ * Define áreas que se remapean en mobile
+ * 
+ * Ejemplo:
+ * <div class="grid--areas">
+ *   <header style="grid-area: header">...</header>
+ *   <nav style="grid-area: sidebar">...</nav>
+ *   <main style="grid-area: content">...</main>
+ * </div>
+ * 
+ * CSS (aquí):
+ * .grid--areas {
+ *   grid-template-areas:
+ *     "header"
+ *     "sidebar"
+ *     "content";
+ * }
+ * 
+ * @media (min-width: 768px) {
+ *   .grid--areas {
+ *     grid-template-areas:
+ *       "header header"
+ *       "sidebar content";
+ *   }
+ * }
+ */
+.grid--areas {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-areas:
+    "header"
+    "sidebar"
+    "content";
+}
+
+@media (min-width: 768px) {
+  .grid--areas {
+    grid-template-columns: 250px 1fr;
+    grid-template-areas:
+      "header header"
+      "sidebar content";
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 12. ASPECT RATIO (Para mantener proporciones)                   */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * aspect-ratio para imágenes y videos
+ * Mantienen proporción incluso si no cargan
+ */
+
+.aspect-square {
+  aspect-ratio: 1;
+}
+
+.aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
+.aspect-4-3 {
+  aspect-ratio: 4 / 3;
+}
+
+.aspect-3-2 {
+  aspect-ratio: 3 / 2;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 13. GRID ITEMS SPECIFICS                                        */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .grid-col-full
+ * 
+ * Item ocupa todas las columnas
+ * Útil para breakpoints o artículos
+ */
+.grid-col-full {
+  grid-column: 1 / -1;
+}
+
+/**
+ * .grid-col-span-2
+ * 
+ * Item ocupa 2 columnas
+ */
+.grid-col-span-2 {
+  grid-column: span 2;
+}
+
+/**
+ * .grid-row-span-2
+ * 
+ * Item ocupa 2 filas
+ */
+.grid-row-span-2 {
+  grid-row: span 2;
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* NOTAS DE IMPLEMENTACIÓN                                            */
+/* ═════════════════════════════════════════════════════════════════
+
+1. DIFERENCIA GRID vs FLEXBOX:
+   
+   Grid:     2D layout (filas Y columnas)
+   Flexbox:  1D layout (fila O columna)
+   
+   Usa Grid para:  Servicios, testimonios, dashboard
+   Usa Flexbox para: Navs, buttons, lista simple
+
+2. AUTO-FIT vs AUTO-FILL:
+   
+   auto-fit:  Colapsa columnas vacías
+   auto-fill: Mantiene columnas vacías
+   
+   Recomendación: auto-fit (es más visual)
+
+3. MINMAX LOGIC:
+   
+   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))
+   
+   - 280px: Tamaño mínimo del item
+   - 1fr: Crece para llenar espacio
+   - Si hay espacio para 2 items (280*2=560): Muestra 2
+   - Si no (< 560px): Muestra 1
+   
+   Ajusta 280px según tu contenido
+
+4. GAP CONSISTENCY:
+   
+   Usa siempre variables de espaciado:
+   ✅ gap: var(--gap-lg)
+   ❌ gap: 24px
+   
+   Si necesitas gap diferente, crea utility:
+   .gap-custom { gap: 20px; }
+
+5. RESPONSIVE PATTERNS:
+   
+   Mobile first:
+   .grid { grid-template-columns: 1fr; }
+   
+   Tablet:
+   @media (min-width: 768px) {
+     .grid { grid-template-columns: repeat(2, 1fr); }
+   }
+   
+   Desktop:
+   @media (min-width: 1024px) {
+     .grid { grid-template-columns: repeat(3, 1fr); }
+   }
+
+6. CUANDO USAR QUÉ:
+   
+   Servicios (cards):     .grid--auto ✅
+   Hero (texto + image):  .grid--2 ✅
+   Testimonios (cards):   .grid--auto ✅
+   Footer (3 columnas):   .grid--3 ✅
+   Navbar (flex):         .flex--between ✅
+
+7. BROWSER SUPPORT:
+   
+   Grid:       Chrome 57+, Firefox 52+, Safari 10.1+
+   Flexbox:    Chrome 29+, Firefox 20+, Safari 6.1+
+   aspect-ratio: Chrome 88+, Firefox 89+, Safari 15+
+   
+   Para older browsers, no es problema (degradan gracefully)
+
+═════════════════════════════════════════════════════════════════ */

@@ -1,0 +1,671 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * INPUTS.CSS - SISTEMA DE FORMULARIOS
+ * 
+ * Responsabilidad: Definir estilos para inputs, textareas, labels
+ * Estados: default, focus, disabled, error, success
+ * 
+ * Orden de carga: DECIMOQUINTO (después de filters.css)
+ * 
+ * Uso en HTML:
+ * <div class="form-group">
+ *   <label for="name">Nombre</label>
+ *   <input type="text" id="name" class="input">
+ * </div>
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 1. FORM GROUP - CONTENEDOR                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .form-group
+ * 
+ * Contenedor para label + input
+ * Maneja spacing vertical entre campos
+ */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+/**
+ * Último form-group sin margin
+ */
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+/**
+ * .form-group--inline
+ * 
+ * Label e input en la misma línea
+ */
+.form-group--inline {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+/**
+ * .form-group--required
+ * 
+ * Indicador visual para campos requeridos
+ */
+.form-group--required label::after {
+  content: " *";
+  color: var(--color-error);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 2. LABEL - ETIQUETAS                                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * label
+ * 
+ * Etiqueta para inputs
+ */
+label {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-700);
+  cursor: pointer;
+  display: block;
+  line-height: 1.4;
+}
+
+/**
+ * .form-label
+ * 
+ * Clase alternativa si quieres ser específico
+ */
+.form-label {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-700);
+  cursor: pointer;
+  display: block;
+}
+
+/**
+ * label:disabled
+ * 
+ * Label para inputs deshabilitados
+ */
+label:has(input:disabled),
+label.is-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 3. INPUT - CAMPO DE TEXTO BASE                                  */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * input[type="text"],
+ * input[type="email"],
+ * input[type="password"],
+ * input[type="tel"],
+ * input[type="url"],
+ * input[type="search"],
+ * textarea
+ * 
+ * Estilos base para todos los campos de entrada
+ */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+input[type="number"],
+textarea,
+select {
+  /* Tipografía */
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body);
+  color: var(--color-gray-700);
+  line-height: var(--line-height-body);
+  
+  /* Dimensiones */
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 2px solid var(--color-gray-300);
+  border-radius: var(--radius-input);
+  
+  /* Fondo */
+  background-color: var(--color-white);
+  
+  /* Transición */
+  transition: var(--transition-all);
+  
+  /* Reset de estilos nativos */
+  box-sizing: border-box;
+  
+  /* Previene zoom en iOS */
+  font-size: 16px;
+}
+
+/**
+ * .input
+ * 
+ * Clase reutilizable para inputs
+ */
+.input {
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 2px solid var(--color-gray-300);
+  border-radius: var(--radius-input);
+  font-size: var(--font-size-body);
+  font-family: var(--font-family-base);
+  color: var(--color-gray-700);
+  background-color: var(--color-white);
+  transition: var(--transition-all);
+  box-sizing: border-box;
+}
+
+/**
+ * .input::placeholder
+ */
+.input::placeholder,
+textarea::placeholder {
+  color: var(--color-gray-400);
+  opacity: 1;
+}
+
+/**
+ * .input:focus
+ * 
+ * Focus: borde azul, sombra suave
+ */
+.input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.1);
+  background-color: var(--color-white);
+}
+
+/**
+ * .input:disabled
+ */
+.input:disabled,
+textarea:disabled,
+select:disabled {
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-500);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/**
+ * .input:read-only
+ */
+.input:read-only {
+  background-color: var(--color-gray-50);
+  border-color: var(--color-gray-200);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 4. TEXTAREA - ÁREA DE TEXTO                                     */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * textarea
+ */
+textarea {
+  resize: vertical;
+  min-height: 120px;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+/**
+ * .textarea
+ * 
+ * Clase explícita
+ */
+.textarea {
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 2px solid var(--color-gray-300);
+  border-radius: var(--radius-input);
+  font-size: var(--font-size-body);
+  font-family: var(--font-family-base);
+  resize: vertical;
+  min-height: 120px;
+  transition: var(--transition-all);
+  box-sizing: border-box;
+}
+
+/**
+ * .textarea:focus
+ */
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.1);
+}
+
+/**
+ * .textarea--large
+ * 
+ * Textarea más grande
+ */
+.textarea--large {
+  min-height: 180px;
+}
+
+/**
+ * .textarea--small
+ * 
+ * Textarea más pequeño
+ */
+.textarea--small {
+  min-height: 80px;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 5. SELECT - DROPDOWN                                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * select
+ */
+select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 20px;
+  padding-right: 40px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/**
+ * select:focus
+ */
+select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.1);
+}
+
+/**
+ * .select
+ * 
+ * Clase reutilizable
+ */
+.select {
+  position: relative;
+  display: block;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 6. ESTADOS DE VALIDACIÓN                                        */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .input.is-error
+ * 
+ * Input con error de validación
+ */
+.input.is-error,
+.textarea.is-error,
+.select.is-error select {
+  border-color: var(--color-error);
+  background-color: rgba(239, 68, 68, 0.05);
+}
+
+/**
+ * .input.is-error:focus
+ */
+.input.is-error:focus,
+.textarea.is-error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/**
+ * .input.is-success
+ * 
+ * Input válido
+ */
+.input.is-success,
+.textarea.is-success,
+.select.is-success select {
+  border-color: var(--color-success);
+  background-color: rgba(16, 185, 129, 0.05);
+}
+
+/**
+ * .input.is-success:focus
+ */
+.input.is-success:focus,
+.textarea.is-success:focus {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/**
+ * .input.is-warning
+ */
+.input.is-warning,
+.textarea.is-warning {
+  border-color: var(--color-warning);
+  background-color: rgba(245, 158, 11, 0.05);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 7. MENSAJES DE VALIDACIÓN                                       */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .form-error
+ * 
+ * Mensaje de error bajo el input
+ */
+.form-error,
+.form-help,
+.form-success {
+  font-size: var(--font-size-small);
+  margin-top: var(--spacing-xs);
+  line-height: 1.4;
+  display: block;
+}
+
+/**
+ * .form-error
+ */
+.form-error {
+  color: var(--color-error);
+  font-weight: var(--font-weight-medium);
+}
+
+.form-error::before {
+  content: "✕ ";
+  margin-right: 2px;
+}
+
+/**
+ * .form-help
+ * 
+ * Texto de ayuda/hint
+ */
+.form-help {
+  color: var(--color-gray-500);
+  font-style: italic;
+}
+
+/**
+ * .form-success
+ * 
+ * Mensaje de éxito
+ */
+.form-success {
+  color: var(--color-success);
+  font-weight: var(--font-weight-medium);
+}
+
+.form-success::before {
+  content: "✓ ";
+  margin-right: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 8. CHECKBOX Y RADIO                                             */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * input[type="checkbox"],
+ * input[type="radio"]
+ * 
+ * Estilos base
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--color-primary);
+  margin: 0;
+}
+
+/**
+ * .checkbox-group, .radio-group
+ * 
+ * Contenedores para agrupar checkboxes/radios
+ */
+.checkbox-group,
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/**
+ * .checkbox-item, .radio-item
+ * 
+ * Elemento individual
+ */
+.checkbox-item,
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  cursor: pointer;
+}
+
+/**
+ * .checkbox-item label
+ */
+.checkbox-item label,
+.radio-item label {
+  margin: 0;
+  cursor: pointer;
+  font-weight: var(--font-weight-normal);
+}
+
+/**
+ * .checkbox-item input:disabled
+ */
+.checkbox-item input:disabled,
+.radio-item input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.checkbox-item input:disabled + label,
+.radio-item input:disabled + label {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 9. TAMAÑOS DE INPUT                                             */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .input--sm
+ * 
+ * Input pequeño
+ */
+.input--sm {
+  padding: var(--spacing-sm);
+  font-size: var(--font-size-small);
+}
+
+/**
+ * .input--lg
+ * 
+ * Input grande
+ */
+.input--lg {
+  padding: var(--spacing-lg);
+  font-size: 1.125rem;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 10. INPUT CON ICONO                                             */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .input-wrapper
+ * 
+ * Contenedor para input con icono
+ */
+.input-wrapper {
+  position: relative;
+  display: block;
+}
+
+/**
+ * .input-icon
+ * 
+ * Icono dentro del input
+ */
+.input-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  color: var(--color-gray-400);
+  pointer-events: none;
+}
+
+/**
+ * .input-wrapper input
+ */
+.input-wrapper input {
+  padding-right: 44px;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 11. ANIMACIONES                                                 */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Transiciones suaves
+ */
+input,
+textarea,
+select {
+  transition: border-color var(--transition-fast),
+              box-shadow var(--transition-base),
+              background-color var(--transition-fast);
+}
+
+/**
+ * @keyframes inputError
+ * 
+ * Shake para inputs con error
+ */
+@keyframes inputError {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+.input.shake {
+  animation: inputError var(--duration-base);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 12. RESPONSIVE ADJUSTMENTS                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * En mobile, inputs más grandes
+ */
+@media (max-width: 479px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* NOTAS DE IMPLEMENTACIÓN                                            */
+/* ═════════════════════════════════════════════════════════════════
+
+1. ESTRUCTURA HTML BÁSICA:
+
+   <div class="form-group">
+     <label for="email">Email</label>
+     <input type="email" id="email" class="input" placeholder="tu@email.com">
+   </div>
+
+2. CON VALIDACIÓN:
+
+   <div class="form-group">
+     <label for="email">Email</label>
+     <input type="email" id="email" class="input is-error" placeholder="...">
+     <span class="form-error">Email no válido</span>
+   </div>
+
+3. CON TEXTAREA:
+
+   <div class="form-group">
+     <label for="message">Mensaje</label>
+     <textarea id="message" class="textarea" placeholder="Describe tu problema..."></textarea>
+     <span class="form-help">Máximo 500 caracteres</span>
+   </div>
+
+4. CON SELECT:
+
+   <div class="form-group">
+     <label for="category">Categoría</label>
+     <select id="category" class="input">
+       <option>Selecciona una opción</option>
+       <option>Opción 1</option>
+     </select>
+   </div>
+
+5. CON CHECKBOX:
+
+   <div class="checkbox-group">
+     <div class="checkbox-item">
+       <input type="checkbox" id="agree" class="input">
+       <label for="agree">Acepto los términos y condiciones</label>
+     </div>
+   </div>
+
+6. VALIDACIÓN (JavaScript):
+
+   input.classList.add('is-error');
+   input.classList.add('is-success');
+   input.classList.remove('is-error');
+
+7. ACCESIBILIDAD:
+
+   ✅ Labels asociados con for/id
+   ✅ Font size 16px en mobile (previene zoom)
+   ✅ Focus visible
+   ✅ Mensajes de error descriptivos
+   ✅ form-help para instrucciones
+
+8. ESTADOS:
+
+   Default:   Border gris claro
+   Focus:     Border rojo primario, shadow
+   Error:     Border rojo, background rosa claro
+   Success:   Border verde, background verde claro
+   Disabled:  Opacidad 0.7, background gris
+
+═════════════════════════════════════════════════════════════════ */

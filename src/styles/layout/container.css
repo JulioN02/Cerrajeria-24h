@@ -1,0 +1,387 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * CONTAINER.CSS - CONTENEDOR PRINCIPAL Y ESTRUCTURA
+ * 
+ * Responsabilidad: Definir .container para centrar y limitar ancho
+ * Garantizar consistent padding en todos los dispositivos
+ * Mantener contenido dentro de límites visuales óptimos
+ * 
+ * Orden de carga: QUINTO (después de base/, antes de grid.css)
+ * 
+ * Uso en HTML:
+ * <div class="container">
+ *   <!-- Contenido centrado y con padding -->
+ * </div>
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 1. CONTENEDOR BASE                                              */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .container
+ * 
+ * Características:
+ * - 100% ancho en mobile
+ * - max-width 1200px en desktop
+ * - Centrado horizontalmente con margin auto
+ * - Padding responsivo (16px mobile → 32px desktop)
+ * - Grid display para mejor control de contenido
+ * 
+ * Uso:
+ * <header class="container">
+ * <section class="container">
+ * <div class="container">
+ */
+.container {
+  /* Ancho 100% - Responsive */
+  width: 100%;
+  
+  /* Máximo ancho en desktop */
+  max-width: var(--container-max-width);
+  
+  /* Centrado horizontal */
+  margin-left: auto;
+  margin-right: auto;
+  
+  /* Padding responsivo - Mobile first */
+  padding-left: var(--container-padding-mobile);
+  padding-right: var(--container-padding-mobile);
+  
+  /* Grid para control de flujo de contenido */
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+/* Tablet (768px+) - Padding aumentado */
+@media (min-width: 768px) {
+  .container {
+    padding-left: var(--container-padding-tablet);
+    padding-right: var(--container-padding-tablet);
+  }
+}
+
+/* Desktop (1024px+) - Padding máximo */
+@media (min-width: 1024px) {
+  .container {
+    padding-left: var(--container-padding-desktop);
+    padding-right: var(--container-padding-desktop);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 2. VARIANTES DE CONTENEDOR                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .container--full
+ * 
+ * Ancho completo sin límite máximo
+ * Usa cuando necesitas que el contenedor sea edge-to-edge
+ * 
+ * Ejemplo: Fondos con color/imagen que cubren full width
+ * <section style="background-color: #dark;">
+ *   <div class="container--full">
+ *     <!-- Contenido still tiene padding -->
+ *   </div>
+ * </section>
+ */
+.container--full {
+  max-width: none;
+  width: 100%;
+}
+
+/**
+ * .container--narrow
+ * 
+ * Ancho más restrictivo para textos largos
+ * Mejor legibilidad (aproximadamente 800px máximo)
+ * 
+ * Ejemplo: Artículos, blogs, contenido de texto denso
+ * <article class="container--narrow">
+ */
+.container--narrow {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/**
+ * .container--wide
+ * 
+ * Ancho generoso para dashboards, grids grandes
+ * Máximo 1400px
+ */
+.container--wide {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 3. CONTENEDORES ESPECÍFICOS PARA HEADER/FOOTER                  */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .header-content
+ * 
+ * Contenedor dentro de <header>
+ * En tu HTML: <header class="site-header">
+ *              <div class="container header-content">
+ * 
+ * Características:
+ * - Flex para alinear brand + nav
+ * - Espacio entre elementos (space-between)
+ * - Vertical center (align-items: center)
+ */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-xl);
+  
+  /* Min-height para header robusto */
+  min-height: 64px;
+  
+  /* Responsive: En mobile, puede ser columna */
+  flex-wrap: wrap;
+}
+
+/* En tablet+, layout más espaciado */
+@media (min-width: 768px) {
+  .header-content {
+    min-height: 80px;
+    flex-wrap: nowrap;
+  }
+}
+
+/**
+ * .footer-content
+ * 
+ * Contenedor dentro de <footer>
+ * En tu HTML: <footer class="site-footer">
+ *              <div class="container footer-content">
+ * 
+ * Características:
+ * - Flexible para copyright, links, etc
+ * - Centrado verticalmente
+ */
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-lg);
+  
+  /* Padding vertical para footer robusto */
+  padding: var(--spacing-xl) 0;
+  
+  /* En mobile, stack verticalmente */
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .footer-content {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: var(--spacing-2xl) 0;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 4. CONTENEDOR PARA HERO                                         */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .hero-content
+ * 
+ * Contenedor dentro de .hero-section
+ * En tu HTML: <section class="hero-section">
+ *              <div class="container hero-content">
+ * 
+ * Características:
+ * - Grid 2 columnas (texto + imagen)
+ * - En mobile: 1 columna
+ * - Gap entre columnas
+ * - Vertical center para alineación
+ */
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-2xl);
+  align-items: center;
+  
+  /* Padding vertical hero */
+  padding: var(--spacing-section-mobile) 0;
+}
+
+/* Tablet+: 2 columnas (texto izquierda, imagen derecha) */
+@media (min-width: 768px) {
+  .hero-content {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-3xl);
+    padding: var(--spacing-section-desktop) 0;
+  }
+}
+
+/* Desktop: Ratio mejor para hero */
+@media (min-width: 1024px) {
+  .hero-content {
+    grid-template-columns: 55% 45%;
+    gap: var(--spacing-3xl);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 5. CONTENEDOR PARA SECCIONES CON GRID DE ITEMS                  */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Contenedores genéricos para secciones comunes
+ * Se usan en conjunction con .grid o .flex
+ */
+
+/* Para secciones que tienen header + grid */
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  
+  /* Margin bottom para separar del contenido */
+  margin-bottom: var(--spacing-2xl);
+  
+  /* En desktop, puede ser inline */
+  @media (min-width: 768px) {
+    text-align: center;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 6. CONTROL DE OVERFLOW Y BOUNDARY                               */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Prevent overflow en mobile
+ * Asegura que nada se sale del viewport
+ */
+.container {
+  /* Previene overflow horizontal */
+  overflow-x: hidden;
+  
+  /* Auto height para contenido dinámico */
+  height: auto;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 7. CONTAINER CON BACKGROUND (Para secciones con color)          */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Ejemplo de uso con background:
+ * 
+ * <section style="background-color: var(--color-gray-100);">
+ *   <div class="container">
+ *     <!-- Content -->
+ *   </div>
+ * </section>
+ * 
+ * El container heredará el background que lo envuelve
+ * Pero mantendrá padding interno
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 8. UTILITY CLASSES PARA CONTENEDOR                              */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .container--no-padding
+ * 
+ * Contenedor sin padding lateral
+ * Usa cuando la sección completa es edge-to-edge
+ */
+.container--no-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/**
+ * .container--extra-padding
+ * 
+ * Contenedor con padding extra
+ * Para enfatizar contenido
+ */
+.container--extra-padding {
+  padding-left: var(--spacing-2xl);
+  padding-right: var(--spacing-2xl);
+}
+
+/**
+ * .container--tight
+ * 
+ * Contenedor con padding mínimo
+ */
+.container--tight {
+  padding-left: var(--spacing-sm);
+  padding-right: var(--spacing-sm);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 9. CLEARFIX Y HELPERS                                           */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .container::after
+ * 
+ * Clearfix para float (si se usa en legacy)
+ * Moderno: No necesario con grid/flex
+ */
+.container::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* NOTAS DE IMPLEMENTACIÓN                                            */
+/* ═════════════════════════════════════════════════════════════════
+
+1. MAX-WIDTH LÓGICO:
+   - 1200px es el ancho óptimo para legibilidad
+   - Basado en: 960px (content) + 240px (padding)
+   - Se puede ajustar sin romper layout
+
+2. PADDING RESPONSIVO:
+   Mobile:  16px (var(--container-padding-mobile))
+   Tablet:  24px (var(--container-padding-tablet))
+   Desktop: 32px (var(--container-padding-desktop))
+   
+   ✅ Basado en sistema de espaciado 4px
+   ✅ Coherente con gap en grids
+
+3. USO CORRECTO:
+   ✅ <div class="container">
+   ✅ <div class="container container--narrow">
+   ❌ <div class="container--full">  (no necesitas .container)
+   
+   Correcto es:
+   <div class="container container--full">
+
+4. NESTING:
+   ✅ Un .container por sección (header, main, footer)
+   ❌ No anides .container dentro de .container
+   
+   Si necesitas centering adicional, usa flex/grid
+
+5. RESPONSIVE LOGIC:
+   - Mobile (320px - 639px): Usa variables mobile
+   - Tablet (640px - 1023px): Usa variables tablet
+   - Desktop (1024px+): Usa variables desktop
+   - Breakpoints en variables.css
+
+6. COMPATIBILIDAD CON VITE:
+   - Vite compila esto a CSS normal
+   - grid: auto-fit no funciona en IE11 (no soportamos IE)
+   - Variables CSS funcionan en todos los navegadores modernos
+
+═════════════════════════════════════════════════════════════════ */

@@ -1,0 +1,542 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * FILTERS.CSS - SISTEMA DE FILTROS Y CATEGORÍAS
+ * 
+ * Responsabilidad: Definir estilos para filtros de servicios
+ * Botones que togglian entre categorías
+ * Estados: default, active, hover
+ * 
+ * Orden de carga: DECIMOCUARTO (después de badges.css)
+ * 
+ * Uso en HTML:
+ * <nav class="services-filter">
+ *   <button class="filter-button is-active" data-category="all">Todos</button>
+ *   <button class="filter-button" data-category="emergencia">Emergencia</button>
+ * </nav>
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 1. CONTENEDOR DE FILTROS                                        */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .services-filter
+ * 
+ * Contenedor para los botones de filtro
+ * Flex layout, centrado, con gap
+ * 
+ * En tu HTML:
+ * <nav class="services-filter" aria-label="Filtrar servicios">
+ *   <button class="filter-button" data-category="...">...</button>
+ * </nav>
+ */
+.services-filter {
+  /* Layout */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  
+  /* Alineación */
+  justify-content: center;
+  align-items: center;
+  
+  /* Spacing */
+  margin-bottom: var(--spacing-2xl);
+  
+  /* En mobile, más compacto */
+  @media (max-width: 479px) {
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+  }
+}
+
+/**
+ * .services-filter--left
+ * 
+ * Filtros alineados a la izquierda
+ */
+.services-filter--left {
+  justify-content: flex-start;
+}
+
+/**
+ * .services-filter--right
+ * 
+ * Filtros alineados a la derecha
+ */
+.services-filter--right {
+  justify-content: flex-end;
+}
+
+/**
+ * .services-filter--responsive
+ * 
+ * En mobile: columna, centrado
+ * En tablet+: row, centrado
+ */
+.services-filter--responsive {
+  @media (max-width: 479px) {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 2. BOTÓN DE FILTRO - BASE                                       */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .filter-button
+ * 
+ * Botón individual de filtro
+ * Extrae estilos base de .btn pero con variaciones
+ * 
+ * En tu HTML:
+ * <button class="filter-button" data-category="residencial">
+ *   Residencial
+ * </button>
+ */
+.filter-button {
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  
+  /* Dimensiones */
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: 2px solid var(--color-gray-300);
+  border-radius: var(--radius-full);
+  
+  /* Tipografía */
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-700);
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  
+  /* Fondo */
+  background-color: var(--color-white);
+  
+  /* Interacción */
+  cursor: pointer;
+  user-select: none;
+  
+  /* Transición */
+  transition: var(--transition-all);
+  
+  /* Accesibilidad */
+  min-height: 44px;
+  
+  /* Reset */
+  border-style: solid;
+  box-sizing: border-box;
+}
+
+/**
+ * .filter-button:hover
+ * 
+ * Hover: borde más oscuro, background suave
+ */
+.filter-button:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-gray-50);
+  color: var(--color-primary);
+}
+
+/**
+ * .filter-button:focus-visible
+ * 
+ * Focus: outline visible
+ */
+.filter-button:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--radius-full);
+}
+
+/**
+ * .filter-button:active
+ * 
+ * Presionado: sin elevación
+ */
+.filter-button:active {
+  transform: scale(0.98);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 3. BOTÓN ACTIVO - ESTADO SELECCIONADO                           */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .filter-button.is-active
+ * 
+ * Botón de filtro seleccionado
+ * Fondo rojo, texto blanco
+ * Añadido por JavaScript al cambiar filtro
+ */
+.filter-button.is-active {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+  box-shadow: var(--shadow-sm);
+}
+
+/**
+ * .filter-button.is-active:hover
+ * 
+ * Hover en activo: color más oscuro
+ */
+.filter-button.is-active:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 4. VARIANTES POR CATEGORÍA                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .filter-button--emergency
+ * 
+ * Botón específico para emergencia
+ * Border rojo
+ */
+.filter-button--emergency {
+  border-color: var(--color-primary);
+}
+
+.filter-button--emergency:hover:not(.is-active) {
+  border-color: var(--color-primary-hover);
+  color: var(--color-primary);
+}
+
+/**
+ * .filter-button--residential
+ * 
+ * Botón para residencial
+ * Border amarillo
+ */
+.filter-button--residential {
+  border-color: var(--color-accent);
+}
+
+.filter-button--residential:hover:not(.is-active) {
+  border-color: var(--color-accent-hover);
+  color: var(--color-accent);
+}
+
+/**
+ * .filter-button--automotriz
+ * 
+ * Botón para automotriz
+ * Border azul
+ */
+.filter-button--automotriz {
+  border-color: var(--color-info);
+}
+
+.filter-button--automotriz:hover:not(.is-active) {
+  border-color: #2563EB;
+  color: var(--color-info);
+}
+
+/**
+ * .filter-button--comercial
+ * 
+ * Botón para comercial
+ * Border gris
+ */
+.filter-button--comercial {
+  border-color: var(--color-gray-400);
+}
+
+.filter-button--comercial:hover:not(.is-active) {
+  border-color: var(--color-gray-600);
+  color: var(--color-gray-600);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 5. BOTÓN CON ICONO Y CONTADOR                                   */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .filter-button--with-count
+ * 
+ * Botón que muestra cantidad de items
+ */
+.filter-button--with-count {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-xl);
+}
+
+/**
+ * .filter-count
+ * 
+ * Badge con cantidad dentro del botón
+ */
+.filter-count {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 0 var(--spacing-sm);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-bold);
+  min-width: 20px;
+  text-align: center;
+}
+
+.filter-button.is-active .filter-count {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 6. TAMAÑOS DE BOTÓN FILTRO                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .filter-button--sm
+ * 
+ * Botón filtro pequeño
+ */
+.filter-button--sm {
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: var(--font-size-small);
+  min-height: 36px;
+}
+
+/**
+ * .filter-button--lg
+ * 
+ * Botón filtro grande
+ */
+.filter-button--lg {
+  padding: var(--spacing-md) var(--spacing-2xl);
+  font-size: 1.125rem;
+  min-height: 48px;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 7. BOTÓN FILTRO OUTLINE ACTIVO                                  */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Variante donde TODOS los botones tienen outline
+ * y los activos tienen fondo
+ */
+.filter-button--outline {
+  border: 2px solid var(--color-gray-300);
+  background-color: transparent;
+}
+
+.filter-button--outline.is-active {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 8. ESTADOS ESPECIALES                                           */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * .filter-button:disabled
+ * 
+ * Filtro deshabilitado
+ */
+.filter-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/**
+ * .filter-button.is-loading
+ * 
+ * Filtro en estado de carga
+ */
+.filter-button.is-loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 9. ANIMACIONES                                                  */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Transiciones suaves
+ */
+.filter-button {
+  transition: background-color var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast),
+              box-shadow var(--transition-base),
+              transform var(--transition-base);
+}
+
+/**
+ * @keyframes filterSelect
+ * 
+ * Animación al seleccionar filtro
+ */
+@keyframes filterSelect {
+  0% {
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.filter-button.animate-select {
+  animation: filterSelect var(--duration-fast) var(--ease-out);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 10. RESPONSIVE ADJUSTMENTS                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * En mobile, filtros más compactos
+ */
+@media (max-width: 479px) {
+  .filter-button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-small);
+    min-height: 40px;
+  }
+  
+  .services-filter {
+    gap: var(--spacing-xs);
+  }
+}
+
+/**
+ * En tablet, gap mayor
+ */
+@media (min-width: 768px) {
+  .services-filter {
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* 11. ACCESIBILIDAD - INDICADOR VISUAL                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Indicador visual claro de estado activo
+ * No depende solo de color
+ */
+.filter-button.is-active::after {
+  content: "✓";
+  margin-left: var(--spacing-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+/**
+ * Si no quieres el checkmark, usa:
+ * .filter-button.is-active.no-checkmark::after { content: ""; }
+ */
+.filter-button.is-active.no-checkmark::after {
+  content: "";
+  display: none;
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* NOTAS DE IMPLEMENTACIÓN                                            */
+/* ═════════════════════════════════════════════════════════════════
+
+1. ESTRUCTURA HTML:
+
+   <nav class="services-filter" aria-label="Filtrar servicios">
+     <button class="filter-button is-active" data-category="all">
+       Todos
+     </button>
+     <button class="filter-button" data-category="emergencia">
+       Emergencia
+     </button>
+     <button class="filter-button" data-category="residencial">
+       Residencial
+     </button>
+     <button class="filter-button" data-category="automotriz">
+       Automotriz
+     </button>
+     <button class="filter-button" data-category="comercial">
+       Comercial
+     </button>
+   </nav>
+
+2. JAVASCRIPT REQUERIDO (básico):
+
+   document.querySelectorAll('.filter-button').forEach(button => {
+     button.addEventListener('click', function() {
+       // Remover active de todos
+       document.querySelectorAll('.filter-button').forEach(b => 
+         b.classList.remove('is-active')
+       );
+       
+       // Añadir active a este
+       this.classList.add('is-active');
+       
+       // Trigger filter logic
+       const category = this.dataset.category;
+       filterServices(category);
+     });
+   });
+
+3. DATA ATTRIBUTE:
+
+   data-category="all"         (Todos los servicios)
+   data-category="emergencia"  (Emergencia)
+   data-category="residencial" (Residencial)
+   data-category="automotriz"  (Automotriz)
+   data-category="comercial"   (Comercial)
+
+4. ESTADOS:
+
+   Default:     Border gris, fondo blanco
+   Hover:       Border + color primario, fondo suave
+   Active:      Fondo rojo, texto blanco, bold
+   Disabled:    Opacidad 50%, cursor not-allowed
+   Focus:       Outline visible para accesibilidad
+
+5. ACCESIBILIDAD:
+
+   ✅ aria-label en <nav>
+   ✅ Focus visible en botones
+   ✅ Checkmark visual (✓) para estado activo
+   ✅ Min-height 44px para tamaño táctil
+   ✅ Contraste suficiente
+
+6. PERFORMANCE:
+
+   - Transiciones CSS (150ms)
+   - No anima layout properties
+   - Transform: scale (GPU acceleration)
+
+7. COMBINACIONES RECOMENDADAS:
+
+   ✅ Estándar:
+   <button class="filter-button" data-category="...">
+
+   ✅ Con contador:
+   <button class="filter-button filter-button--with-count">
+     <span>Emergencia</span>
+     <span class="filter-count">5</span>
+   </button>
+
+   ✅ Pequeño:
+   <button class="filter-button filter-button--sm">
+
+═════════════════════════════════════════════════════════════════ */

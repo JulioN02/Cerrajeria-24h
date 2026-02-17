@@ -17,6 +17,11 @@ export const registerServicesFilterHandler = (
       | ServiceCategory
       | "todos";
 
+    // UX: Actualizar estado visual
+    const buttons = dom.servicesFilterContainer?.querySelectorAll(".filter-button");
+    buttons?.forEach(btn => btn.classList.remove("is-active"));
+    target.classList.add("is-active");
+
     if (category === "todos") {
       renderServices(services);
       return;
